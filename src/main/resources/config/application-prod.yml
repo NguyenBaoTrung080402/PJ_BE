@@ -1,0 +1,46 @@
+logging:
+  level:
+    ROOT: ERROR
+    org:
+      hibernate.SQL: DEBUG
+      springframework.web: DEBUG
+    DSTA.dangdung.ManagementSchool: DEBUG
+  file.name: ./file.log
+
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/pj?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password: 123T
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+
+server:
+  port: 8080
+
+ManagementSchool:
+  mail:
+    base-url: http://127.0.0.1:8080
+  logging:
+    use-json-format: false
+    logstash:
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+

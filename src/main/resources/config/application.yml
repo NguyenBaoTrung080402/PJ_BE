@@ -1,0 +1,105 @@
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump', 'liquibase']
+  endpoint:
+    health:
+      show-details: WHEN_AUTHORIZED
+      roles: 'ROLE_ADMIN'
+      probes:
+        enabled: true
+    jhimetrics:
+      enabled: true
+  info:
+    git:
+      mode: full
+  health:
+    group:
+      liveness:
+        include: livenessState
+      readiness:
+        include: readinessState,datasource
+    mail:
+      enabled: false # When using the MailService, configure an SMTP server and set this to true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 60
+    enable:
+      http: true
+      jvm: true
+      logback: true
+      process: true
+      system: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+    tags:
+      application: ${spring.application.name}
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: PJ
+  profiles:
+    active: dev
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  messages:
+    basename: ./../message/mesage
+  output:
+    ansi:
+      console-available: true
+  mail:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+    
+
+PJ:
+  clientApp:
+    name: 'PJ'
+  mail:
+    from: PJ@localhost
+
+app:  
+  security:
+    secret: ZjEwZGM5YWY0MzQxNTMzZDMwMWYwYmQzNmRjMDNlN2EyOWI2MWRjZWVmMDBhY2EwN2Q1YTZjY2E5YjNiMDE5YTZhNWM4ZjUzNGEwMjgxYThiNGE1Y2ZiYzE4YzU0NGY4MjBkZmVmMzgzZmVkYmUwMGVlZWFhYzkwZjNlM2Q5M2Q=
+    expiration: 74649600
