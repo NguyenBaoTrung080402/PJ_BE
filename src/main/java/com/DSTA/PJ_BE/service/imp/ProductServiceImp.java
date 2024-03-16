@@ -44,7 +44,7 @@ public class ProductServiceImp implements ProductService {
                 return res;
             }
 
-            res.setResult(Constants.SUCCESS);
+            res.setStatus(Constants.SUCCESS);
             res.setResult(listProduct);
             return res;
         } catch (Exception ex) {
