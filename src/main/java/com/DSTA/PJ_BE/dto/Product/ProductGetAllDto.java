@@ -1,50 +1,20 @@
-package com.DSTA.PJ_BE.entity;
+package com.DSTA.PJ_BE.dto.Product;
 
-import javax.persistence.*;
-
-import com.DSTA.PJ_BE.utils.Common;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "product")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name_product", columnDefinition = "VARCHAR(50)", nullable = false)
+public class ProductGetAllDto {
     private String name;
-    @Column(name = "slug_product", columnDefinition = "VARCHAR(50)", nullable = false, unique = true)
     private String slug;
-    @Column(name = "information", columnDefinition = "TEXT", nullable = false)
     private String information;
-    @Column(name = "summary", columnDefinition = "TEXT", nullable = false)
     private String summary;
-    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
-    @Column(name = "image", columnDefinition = "VARCHAR(2048)", nullable = false)
     private String image;
-    @Column(name = "stock", columnDefinition = "INT UNSIGNED", nullable = false)
     private Integer stock;
-    @Column(name = "price", columnDefinition = "NUMERIC(10,2)", nullable = false)
     private BigDecimal price;
-    @Column(name = "discounted_price", columnDefinition = "NUMERIC(10,2)", nullable = false)
     private BigDecimal  discountedPrice;
-    @Column(name = "categories_id", columnDefinition = "BIGINT", nullable = false)
-    private Long categoriesId;
-    @Column(name = "brands_id", columnDefinition = "BIGINT", nullable = false)
-    private Long brandsId;
-    @Column(name = "status", columnDefinition = "VARCHAR(20)", nullable = false)
+    private String categoriesName;
+    private String brandsName;
     private String status;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -59,7 +29,7 @@ public class Product {
     }
 
     public void setSlug(String slug) {
-        this.slug = slug.toUpperCase();
+        this.slug = slug;
     }
 
     public String getInformation() {
@@ -118,20 +88,20 @@ public class Product {
         this.discountedPrice = discountedPrice;
     }
 
-    public Long getCategoriesId() {
-        return categoriesId;
+    public String getCategoriesName() {
+        return categoriesName;
     }
 
-    public void setCategoriesId(Long categoriesId) {
-        this.categoriesId = categoriesId;
+    public void setCategoriesName(String categoriesName) {
+        this.categoriesName = categoriesName;
     }
 
-    public Long getBrandsId() {
-        return brandsId;
+    public String getBrandsName() {
+        return brandsName;
     }
 
-    public void setBrandsId(Long brandsId) {
-        this.brandsId = brandsId;
+    public void setBrandsName(String brandsName) {
+        this.brandsName = brandsName;
     }
 
     public String getStatus() {

@@ -1,10 +1,10 @@
 package com.DSTA.PJ_BE.service.imp;
 
-import com.DSTA.PJ_BE.dto.Product.ProductCreateDto;
-import com.DSTA.PJ_BE.entity.Account;
-import com.DSTA.PJ_BE.entity.Product;
-import com.DSTA.PJ_BE.entity.WishList;
+import com.DSTA.PJ_BE.dto.Product.*;
+import com.DSTA.PJ_BE.entity.*;
+import com.DSTA.PJ_BE.repository.ProductColorRepository;
 import com.DSTA.PJ_BE.repository.ProductRepository;
+import com.DSTA.PJ_BE.repository.ProductSizeRepository;
 import com.DSTA.PJ_BE.repository.WishListRepository;
 import com.DSTA.PJ_BE.service.ProductService;
 import com.DSTA.PJ_BE.utils.Common;
@@ -32,20 +32,26 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
+
+    @Autowired
+    private ProductColorRepository productColorRepository;
+
     @Override
     public DataResponse getAllProducts(Pageable pageable) {
         log.debug("Request Get All Product");
         DataResponse res = new DataResponse();
         try {
-            Page<Product> listProduct = productRepository.getAllProduct(pageable);
+            Page<ProductGetAllInfDto> listProduct = productRepository.getAllProductInf(pageable);
             if (!listProduct.hasContent()) {
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
-
+            Page<ProductGetAllDto> productGetAll = Common.mapPage(listProduct, ProductGetAllDto.class);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(listProduct);
+            res.setResult(productGetAll);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
@@ -59,14 +65,15 @@ public class ProductServiceImp implements ProductService {
         log.debug("Request Get Product By Id");
         DataResponse res = new DataResponse();
         try {
-            Product product = productRepository.getProductByID(id);
-            if (product == null) {
+            ProductGetByIdInfDto productInf = productRepository.getProductByIDInf(id);
+            if (productInf == null) {
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
+            ProductGetByIdDto productGetAll = mapper.map(productInf, ProductGetByIdDto.class);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(product);
+            res.setResult(productGetAll);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
@@ -81,6 +88,9 @@ public class ProductServiceImp implements ProductService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         Product product = new Product();
+
+        ProductColor productColor = new ProductColor();
+        ProductSize productSize = new ProductSize();
         try {
             ProductCreateDto productCreateDto = Common.convertStringToObject(str, ProductCreateDto.class);
             product = mapper.map(productCreateDto, Product.class);
@@ -117,8 +127,16 @@ public class ProductServiceImp implements ProductService {
             product.setStatus(productCreateDto.getStatus());
             product.setCategoriesId(productCreateDto.getCategoriesId());
             product.setBrandsId(productCreateDto.getBrandsId());
-
             productRepository.save(product);
+
+            productSize.setProductId(product.getId());
+            productSize.setSizeId(productCreateDto.getSizeId());
+            productColor.setColorId(productCreateDto.getColorId());
+            productColor.setProductId(product.getId());
+
+            productColorRepository.save(productColor);
+            productSizeRepository.save(productSize);
+
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.ADD_SUCCESS);
             res.setResult(product);
@@ -141,6 +159,8 @@ public class ProductServiceImp implements ProductService {
 
             Product product = productRepository.getProductByID(id);
             WishList wishList = wishListRepository.getWLbyProdyctID(product.getId());
+            ProductColor productColor = productColorRepository.getProductColorByProductId(product.getId());
+            ProductSize productSize = productSizeRepository.getProductSizeByProductId(product.getId());
             if (
                     productCreateDto.getName().length() < 5 ||
                             productCreateDto.getSlug().length() < 5 ||
@@ -173,16 +193,24 @@ public class ProductServiceImp implements ProductService {
             product.setStatus(productCreateDto.getStatus());
             product.setCategoriesId(productCreateDto.getCategoriesId());
             product.setBrandsId(productCreateDto.getBrandsId());
-
-
             productRepository.save(product);
-            wishListRepository.delete(wishList);
-            res.setStatus(Constants.SUCCESS);
-            res.setMessage(Constants.ADD_SUCCESS);
-            res.setResult(product);
+
+            productColor.setColorId(productCreateDto.getColorId());
+            productSize.setSizeId(productCreateDto.getSizeId());
+
+            productColorRepository.save(productColor);
+            productSizeRepository.save(productSize);
+            if(wishList != null && wishList.getProductId() != null){
+                wishListRepository.delete(wishList);
+            }else {
+                res.setStatus(Constants.SUCCESS);
+                res.setMessage(Constants.ADD_SUCCESS);
+                res.setResult(product);
+            }
             return res;
 
         }catch (Exception ex){
+            System.out.println(ex.getMessage());
             res.setStatus(Constants.ERROR);
             res.setMessage(Constants.SYSTEM_ERROR);
             return res;
@@ -195,11 +223,16 @@ public class ProductServiceImp implements ProductService {
         DataResponse res = new DataResponse();
         try {
             Product product = productRepository.getProductByID(id);
+            ProductColor productColor = productColorRepository.getProductColorByProductId(product.getId());
+            ProductSize productSize = productSizeRepository.getProductSizeByProductId(product.getId());
+
             if(product == null){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
+            productColorRepository.delete(productColor);
+            productSizeRepository.delete(productSize);
             productRepository.delete(product);
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.DELETE_SUCCESS);

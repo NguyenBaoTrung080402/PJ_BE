@@ -9,17 +9,17 @@ public class Constants {
 	public static final String NOT_FOUND = "not-found";
 
 	public static final String SYSTEM_ERROR = "Hệ thống lỗi, vui lòng thử lại!";
-	
+
 	public static final String GET_DATA_ERROR = "Lấy dữ liệu thất bại!";
-	
+
 	public static final String GET_DATA_SUCCESS = "Lấy dữ liệu thành công!";
 
 	public static final String SAVE_SUCCESS = "Lưu dữ liệu thành công!";
-	
+
 	public static final String SAVE_FAIL = "Lưu dữ liệu thất bại!";
 
 	public static final String DATA_EMPTY = "Dữ liệu rỗng";
-	
+
 	public static final String DUPLICATE_DATA = "Dữ liệu trùng lặp";
 
 	public static final String LOGIN_SUCCESS = "Đăng nhập thành công!";
@@ -56,23 +56,23 @@ public class Constants {
 
 	public static final String DATE_ERROR = "Kiểu ngày tháng không hợp lệ!";
 
-    public static final String REGISTER_FAIL = "Đăng ký thất bại !";
-    
+	public static final String REGISTER_FAIL = "Đăng ký thất bại !";
+
 	public static final String CUSTOMER = "CUSTOMER";
-	
+
 	public static final String ROLE = "ROLE_";
-	
+
 	public static final String REGISTER_SUCCESS = "Đăng kí thành công!";
 
-    public static final String PASSWORD_INVALID = "Mật khẩu không hợp lệ!";
+	public static final String PASSWORD_INVALID = "Mật khẩu không hợp lệ!";
 
-    public static final String NOT_FOUND_EMAIL = "Không tìm thấy mail";
+	public static final String NOT_FOUND_EMAIL = "Không tìm thấy mail";
 
-    public static final String UPDATE_ACCOUNT_SUCCESS = "Cập nhập thông tin thành công!";
+	public static final String UPDATE_ACCOUNT_SUCCESS = "Cập nhập thông tin thành công!";
 
 	public static final String UPDATE_FAIL = "Cập nhập thất bại!";
 
-    public static final String SEND_EMAIL_SUCCESS = "Gửi email thành công";
+	public static final String SEND_EMAIL_SUCCESS = "Gửi email thành công";
 
 	public static final String SEND_EMAIL_FAIL = "Gửi email không thành công";
 
@@ -82,14 +82,14 @@ public class Constants {
 
 	public static final String AVATAR_SAVE = "./assets/avatar/";
 	public static final String DELETE_SUCCESS = "Xoá Thành Công!";
-    public static final String ADD_CATEGORIES_SUCCESS = "Thêm Categories thành công!";
+	public static final String ADD_CATEGORIES_SUCCESS = "Thêm Categories thành công!";
 	public static final String ERROR_ADD_NEW_CATEGORIES = "Lỗi khi thêm categories";
 	public static final String IMG_CATEGORY_SAVE = "./src/main/resources/static/categories/";
 	public static final String IMG_PRODUCT_SAVE = "./src/main/resources/static/product/";
 	public static final String CATEGORIES_NOT_FOUND = "Danh Sách Category rỗng";
 	public static final String UPDATE_SUCCESS = "Cập nhập thành công!";
-    public static final String ERROR_ADD_NEW_BRANDS = "Lô Khi Thêm Mới Brands";
+	public static final String ERROR_ADD_NEW_BRANDS = "Lô Khi Thêm Mới Brands";
 	public static final String ADD_SUCCESS = "Thêm Mới Thành Công!";
-    public static final String LIST_NOT_FOUND = "Danh Sách Rỗng!";
-    public static final String ERROR_ADD_NEW_PRODUCT = "Lỗi khi thêm mới product";
+	public static final String LIST_NOT_FOUND = "Danh Sách Rỗng!";
+	public static final String ERROR_ADD_NEW_PRODUCT = "Lỗi khi thêm mới product";
 }

@@ -22,8 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -156,5 +159,22 @@ public class Common {
 			}
 		}catch (Exception ex){
 		}
+	}
+
+	public static String convertToBase64(String path) throws IOException {
+		FileInputStream fileInputStream;
+		File file;
+		try {
+			file = new File(path);
+			fileInputStream = new FileInputStream(file);
+		} catch (Exception e) {
+			file = new File("./assets/no_image.jpg");
+			fileInputStream = new FileInputStream(file);
+		}
+
+		byte[] fileByte = new byte[(int) file.length()];
+		fileInputStream.read(fileByte);
+		fileInputStream.close();
+		return Base64.getEncoder().encodeToString(fileByte);
 	}
 }
