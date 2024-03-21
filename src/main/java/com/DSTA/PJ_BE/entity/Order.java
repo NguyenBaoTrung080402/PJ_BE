@@ -10,7 +10,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "user_id", columnDefinition = "BIGINT", nullable = false)
-    private Long userId;
+    private Long userId;    
     @Column(name = "product_id", columnDefinition = "BIGINT", nullable = false)
     private Long productId;
     @Column(name = "quantity", columnDefinition = "INT", nullable = false)
