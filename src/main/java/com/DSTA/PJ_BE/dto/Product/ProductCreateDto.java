@@ -15,6 +15,24 @@ public class ProductCreateDto {
     private Long categoriesId;
     private Long brandsId;
     private String status;
+    private Long colorId;
+    private Long sizeId;
+
+    public Long getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
+    }
+
+    public Long getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(Long sizeId) {
+        this.sizeId = sizeId;
+    }
 
     public String getName() {
         return name;

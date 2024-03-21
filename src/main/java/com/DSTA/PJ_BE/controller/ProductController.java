@@ -20,7 +20,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/get-all-product/{page}")
+    @GetMapping("/get-all-product")
     public DataResponse getAllProduct(@PageableDefault(page = 0, size = 8) Pageable pageable){
         log.debug("Controller Request Get All Product");
         DataResponse res = productService.getAllProducts(pageable);
