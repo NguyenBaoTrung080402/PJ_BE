@@ -1,6 +1,5 @@
 package com.DSTA.PJ_BE.service;
 
-import com.DSTA.PJ_BE.entity.Categories;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import org.springframework.web.multipart.MultipartFile;
 

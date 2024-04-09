@@ -99,4 +99,12 @@ public class AccountController {
         DataResponse res = accountService.changePass(accountChangePassDto);
         return res;
     }
+
+    @PostMapping("update-admin/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public DataResponse updateAdmin(@PathVariable("id") Long id){
+        log.debug("Controller Update Admin");
+        DataResponse res = accountService.updateAdmin(id);
+        return res;
+    }
 }

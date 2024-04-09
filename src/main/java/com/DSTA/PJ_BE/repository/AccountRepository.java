@@ -15,6 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT a FROM Account a WHERE a.id = :id")
     Account getAccountId(@Param("id") Long id);
+    
     @Query(value = "SELECT a FROM Account a")
     Page<Account> getUser(Pageable pageable);
 }

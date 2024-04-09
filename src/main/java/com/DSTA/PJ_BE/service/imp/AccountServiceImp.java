@@ -215,4 +215,31 @@ public class AccountServiceImp implements AccountService {
         }
     }
 
+    @Override
+    public DataResponse updateAdmin(Long id) {
+        log.debug("Request update admin");
+        DataResponse res = new DataResponse();
+        try {
+            Account account = accountRepository.getAccountId(id);
+            if(account == null){
+                res.setStatus(Constants.NOT_FOUND);
+                res.setMessage(Constants.ACCOUNT_NOT_FOUND);
+                return res;
+            }
+            if(account.getAuthority().equals(getRoleJson(Authorities.CUSTOMER))){
+                account.setAuthority(getRoleJson(Authorities.ADMIN));
+            }else{
+                account.setAuthority(getRoleJson(Authorities.CUSTOMER));
+            }
+            accountRepository.save(account);
+            res.setStatus(Constants.SUCCESS);
+            res.setMessage(Constants.UPDATE_SUCCESS);
+            return res;
+        } catch (Exception ex) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
+
 }

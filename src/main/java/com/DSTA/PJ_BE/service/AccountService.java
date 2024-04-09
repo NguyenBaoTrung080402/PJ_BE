@@ -24,4 +24,6 @@ public interface AccountService {
     DataResponse getAllUser(Pageable pageable);
 
     DataResponse changePass(AccountChangePassDto accountChangePassDto);
+
+    DataResponse updateAdmin(Long id);
 }

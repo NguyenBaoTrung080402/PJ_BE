@@ -3,7 +3,6 @@ package com.DSTA.PJ_BE.utils;
 import com.DSTA.PJ_BE.Security.CustomUserDetails;
 import com.DSTA.PJ_BE.config.ModelMapperConfig;
 import com.DSTA.PJ_BE.entity.Account;
-import com.DSTA.PJ_BE.service.imp.AccountServiceImp;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -20,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -3,6 +3,7 @@ package com.DSTA.PJ_BE.dto.Product;
 import java.math.BigDecimal;
 
 public class ProductGetAllDto {
+    private Long id;
     private String name;
     private String slug;
     private String information;
@@ -16,6 +17,12 @@ public class ProductGetAllDto {
     private String brandsName;
     private String status;
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
