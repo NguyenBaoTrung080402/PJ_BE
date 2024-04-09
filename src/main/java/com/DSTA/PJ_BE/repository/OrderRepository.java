@@ -5,7 +5,6 @@ import com.DSTA.PJ_BE.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,7 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "SELECT od FROM Order od WHERE od.id = :id")
     Order getOrderByID(@Param("id") Long id);
 
-    @Query(value = "SELECT p.name_product AS productName, od.price AS total, od.status AS status, od.quantity AS quantity, od.tel AS tel, od.address AS address, us.name AS userName " +
+    @Query(value = "SELECT od.id AS id, p.name_product AS productName, od.price AS total, od.status AS status, od.quantity AS quantity, od.tel AS tel, od.address AS address, us.name AS userName " +
             " FROM orders od " +
             " JOIN product p ON od.product_id = p.id " +
             " JOIN user us ON od.user_id = us.id ", nativeQuery = true)

@@ -3,6 +3,8 @@ package com.DSTA.PJ_BE.dto.Product;
 import java.math.BigDecimal;
 
 public interface ProductGetAllInfDto {
+    public Long getId();
+    
     public String getName();
 
     public String getSlug();

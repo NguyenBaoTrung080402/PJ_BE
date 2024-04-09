@@ -32,9 +32,9 @@ public class BrandServiceImp implements BrandsService {
                 res.setMessage(Constants.ERROR_ADD_NEW_BRANDS);
                 return res;
             }
-//            brands.setNameBrand(brands.getNameBrand());
-//            brands.setSlugBrand(brands.getSlugBrand());
-//            brands.setStatus(brands.getStatus());
+            brands.setNameBrand(brands.getNameBrand());
+            brands.setSlugBrand(brands.getSlugBrand());
+            brands.setStatus(brands.getStatus());
             brandRepository.save(brands);
 
             res.setStatus(Constants.SUCCESS);

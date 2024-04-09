@@ -45,7 +45,7 @@ public class CategoryController {
 
     @PutMapping("/update-category/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public DataResponse updateCategories(MultipartHttpServletRequest data,@PathVariable("id") Long id){
+    public DataResponse updateCategories(MultipartHttpServletRequest data, @PathVariable("id") Long id){
         log.debug("Controller Request Update Category");
         MultipartFile file = data.getFile("imageCategories");
         String str = data.getParameter("categories");
