@@ -3,6 +3,9 @@ package com.DSTA.PJ_BE.dto.Product;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.DSTA.PJ_BE.utils.LongListDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 public class ProductCreateDto {
     private String name;
     private String slug;
@@ -16,7 +19,9 @@ public class ProductCreateDto {
     private Long categoriesId;
     private Long brandsId;
     private String status;
+    @JsonDeserialize(using = LongListDeserializer.class)
     private List<Long> colorId;
+    @JsonDeserialize(using = LongListDeserializer.class)
     private List<Long> sizeId;
 
     public List<Long> getColorId() {

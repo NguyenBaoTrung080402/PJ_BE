@@ -10,6 +10,8 @@ import com.DSTA.PJ_BE.service.ProductService;
 import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +94,8 @@ public class ProductServiceImp implements ProductService {
         ProductColor productColor = new ProductColor();
         ProductSize productSize = new ProductSize();
         try {
-            ProductCreateDto productCreateDto = Common.convertStringToObject(str, ProductCreateDto.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductCreateDto productCreateDto = objectMapper.readValue(str, ProductCreateDto.class);
             product = mapper.map(productCreateDto, Product.class);
 
             if (
