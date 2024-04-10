@@ -97,10 +97,10 @@ public class ProductServiceImp implements ProductService {
 
             if (
                     productCreateDto.getName().length() < 5 ||
-                            productCreateDto.getSlug().length() < 5 ||
-                            productCreateDto.getDescription().length() < 10 ||
-                            productCreateDto.getInformation().length() < 10 ||
-                            productCreateDto.getSummary().length() < 10
+                    productCreateDto.getSlug().length() < 5 ||
+                    productCreateDto.getDescription().length() < 10 ||
+                    productCreateDto.getInformation().length() < 10 ||
+                    productCreateDto.getSummary().length() < 10
             ) {
                 res.setStatus(Constants.ERROR);
                 res.setMessage(Constants.ERROR_ADD_NEW_PRODUCT);
@@ -129,13 +129,16 @@ public class ProductServiceImp implements ProductService {
             product.setBrandsId(productCreateDto.getBrandsId());
             productRepository.save(product);
 
-            productSize.setProductId(product.getId());
-            productSize.setSizeId(productCreateDto.getSizeId());
-            productColor.setColorId(productCreateDto.getColorId());
-            productColor.setProductId(product.getId());
-
-            productColorRepository.save(productColor);
-            productSizeRepository.save(productSize);
+            for (Long sizeId : productCreateDto.getSizeId()) {
+                productSize.setSizeId(sizeId);
+                productSize.setProductId(product.getId());
+                productSizeRepository.save(productSize);
+            }
+            for (Long colorId : productCreateDto.getColorId()) {
+                productColor.setColorId(colorId);
+                productColor.setProductId(product.getId());
+                productColorRepository.save(productColor);
+            }
 
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.ADD_SUCCESS);
@@ -195,11 +198,17 @@ public class ProductServiceImp implements ProductService {
             product.setBrandsId(productCreateDto.getBrandsId());
             productRepository.save(product);
 
-            productColor.setColorId(productCreateDto.getColorId());
-            productSize.setSizeId(productCreateDto.getSizeId());
+            for (Long colorId : productCreateDto.getColorId()) {
+                productColor.setColorId(colorId);
+                productColorRepository.save(productColor);
+            }
 
-            productColorRepository.save(productColor);
-            productSizeRepository.save(productSize);
+            for (Long sizeId : productCreateDto.getSizeId()) {
+                productSize.setSizeId(sizeId);
+                productSizeRepository.save(productSize);
+            }
+            
+            
             if(wishList != null && wishList.getProductId() != null){
                 wishListRepository.delete(wishList);
             }else {

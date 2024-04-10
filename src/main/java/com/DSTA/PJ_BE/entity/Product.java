@@ -2,9 +2,6 @@ package com.DSTA.PJ_BE.entity;
 
 import javax.persistence.*;
 
-import com.DSTA.PJ_BE.utils.Common;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 
 @Entity

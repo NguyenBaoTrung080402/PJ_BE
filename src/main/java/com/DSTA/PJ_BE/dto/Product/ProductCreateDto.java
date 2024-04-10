@@ -1,6 +1,7 @@
 package com.DSTA.PJ_BE.dto.Product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductCreateDto {
     private String name;
@@ -15,22 +16,19 @@ public class ProductCreateDto {
     private Long categoriesId;
     private Long brandsId;
     private String status;
-    private Long colorId;
-    private Long sizeId;
+    private List<Long> colorId;
+    private List<Long> sizeId;
 
-    public Long getColorId() {
+    public List<Long> getColorId() {
         return colorId;
     }
-
-    public void setColorId(Long colorId) {
+    public void setColorId(List<Long> colorId) {
         this.colorId = colorId;
     }
-
-    public Long getSizeId() {
+    public List<Long> getSizeId() {
         return sizeId;
     }
-
-    public void setSizeId(Long sizeId) {
+    public void setSizeId(List<Long> sizeId) {
         this.sizeId = sizeId;
     }
 
