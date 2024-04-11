@@ -1,6 +1,6 @@
 package com.DSTA.PJ_BE.controller;
 
-import com.DSTA.PJ_BE.entity.WishList;
+import com.DSTA.PJ_BE.dto.WishListDto.WishListAddDto;
 import com.DSTA.PJ_BE.service.WishListService;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ public class WishListController {
     private WishListService wishListService;
 
     @PostMapping("/add-to-wish-list")
-    public DataResponse addToWishList(@RequestBody WishList list){
+    public DataResponse addToWishList(@RequestBody WishListAddDto wishListAddDto) {
         log.debug("Controller Request Add To Wish List");
-        DataResponse res = wishListService.addToWL(list);
+        DataResponse res = wishListService.addToWL(wishListAddDto);
         return res;
     }
 

@@ -25,8 +25,5 @@ public interface ProductGetByIdInfDto {
 
     public String getBrandsName();
 
-    public String getColorName();
-    public String getSizeName();
-
     public String getStatus();
 }
