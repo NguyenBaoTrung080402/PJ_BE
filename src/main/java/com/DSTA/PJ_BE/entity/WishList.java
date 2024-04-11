@@ -17,7 +17,10 @@ public class WishList {
     private Integer quantity;
     @Column(name = "price", columnDefinition = "NUMERIC(10,2)", nullable = false)
     private BigDecimal price;
-
+    @Column(name= "size_name", columnDefinition = "VARCHAR(10)", nullable = false)
+    private String sizeName;
+    @Column(name= "color_name", columnDefinition = "VARCHAR(10)", nullable = false)
+    private String colorName;
     public Long getId() {
         return id;
     }
@@ -56,5 +59,18 @@ public class WishList {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getSizeName() {
+        return sizeName;
+    }
+    public void setSizeName(String sizeName) {
+        this.sizeName = sizeName;
+    }
+    public String getColorName() {
+        return colorName;
+    }
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
     }
 }

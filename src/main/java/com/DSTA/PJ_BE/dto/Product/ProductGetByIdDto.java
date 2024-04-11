@@ -11,11 +11,9 @@ public class ProductGetByIdDto {
     private String image;
     private Integer stock;
     private BigDecimal price;
-    private BigDecimal  discountedPrice;
+    private BigDecimal discountedPrice;
     private String categoriesName;
     private String brandsName;
-    private String colorName;
-    private String sizeName;
     private String status;
 
     public String getName() {
@@ -104,22 +102,6 @@ public class ProductGetByIdDto {
 
     public void setBrandsName(String brandsName) {
         this.brandsName = brandsName;
-    }
-
-    public String getColorName() {
-        return colorName;
-    }
-
-    public void setColorName(String colorName) {
-        this.colorName = colorName;
-    }
-
-    public String getSizeName() {
-        return sizeName;
-    }
-
-    public void setSizeName(String sizeName) {
-        this.sizeName = sizeName;
     }
 
     public String getStatus() {

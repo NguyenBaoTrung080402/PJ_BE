@@ -7,6 +7,8 @@ public class WishListAddDto {
     private Long productId;
     private Integer quantity;
     private BigDecimal price;
+    private String nameSize;
+    private String nameColor;
 
     public Long getUserId() {
         return userId;
@@ -38,5 +40,18 @@ public class WishListAddDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getNameSize() {
+        return nameSize;
+    }
+    public void setNameSize(String nameSize) {
+        this.nameSize = nameSize;
+    }
+    public String getNameColor() {
+        return nameColor;
+    }
+    public void setNameColor(String nameColor) {
+        this.nameColor = nameColor;
     }
 }

@@ -35,12 +35,13 @@ public class WishListServiceImp implements WishListService {
     private ModelMapper mapper;
 
     @Override
-    public DataResponse addToWL(WishList wishListAddDto) {
+    public DataResponse addToWL(WishListAddDto wishListAddDto) {
         log.debug("Request Add To Wish List");
         DataResponse res = new DataResponse();
         try {
             Account account = Common.getCurrentUserLogin();
             Product product = productRepository.getProductByID(wishListAddDto.getProductId());
+            WishList list = mapper.map(wishListAddDto, WishList.class);
 
             if (product == null || account == null) {
                 res.setStatus(Constants.NOT_FOUND);
@@ -54,21 +55,25 @@ public class WishListServiceImp implements WishListService {
 
                 WishList existingWishListItem = existingWishListItems.get(0);
                 existingWishListItem.setQuantity(existingWishListItem.getQuantity() + wishListAddDto.getQuantity());
+                existingWishListItem.setColorName(wishListAddDto.getNameColor());
+                existingWishListItem.setSizeName(wishListAddDto.getNameSize());
                 existingWishListItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(existingWishListItem.getQuantity())));
                 wishListRepository.save(existingWishListItem);
                 res.setMessage(Constants.UPDATE_SUCCESS);
                 res.setResult(existingWishListItem);
 
             } else {
-                wishListAddDto.setUserId(account.getId());
-                wishListAddDto.setProductId(product.getId());
-                wishListAddDto.setPrice(product.getPrice().multiply(BigDecimal.valueOf(wishListAddDto.getQuantity())));
-                wishListRepository.save(wishListAddDto);
+                list.setUserId(account.getId());
+                list.setProductId(product.getId());
+                list.setColorName(wishListAddDto.getNameColor());
+                list.setSizeName(wishListAddDto.getNameSize());
+                list.setPrice(product.getPrice().multiply(BigDecimal.valueOf(wishListAddDto.getQuantity())));
+                wishListRepository.save(list);
                 res.setMessage(Constants.ADD_SUCCESS);
             }
 
             res.setStatus(Constants.SUCCESS);
-            res.setResult(wishListAddDto);
+            res.setResult(list);
             return res;
         } catch (Exception ex) {
             log.error("Message Add To WishList___BUG: " + ex.getMessage());

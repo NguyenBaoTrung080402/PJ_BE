@@ -1,6 +1,10 @@
 package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.dto.Product.*;
+import com.DSTA.PJ_BE.dto.ProductColorDto.ProductColorGetDto;
+import com.DSTA.PJ_BE.dto.ProductColorDto.ProductColorGetInf;
+import com.DSTA.PJ_BE.dto.ProductSizeDto.ProductSizeGetDto;
+import com.DSTA.PJ_BE.dto.ProductSizeDto.ProductSizeGetIdInf;
 import com.DSTA.PJ_BE.entity.*;
 import com.DSTA.PJ_BE.repository.ProductColorRepository;
 import com.DSTA.PJ_BE.repository.ProductRepository;
@@ -11,6 +15,8 @@ import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -68,14 +74,20 @@ public class ProductServiceImp implements ProductService {
         DataResponse res = new DataResponse();
         try {
             ProductGetByIdInfDto productInf = productRepository.getProductByIDInf(id);
-            if (productInf == null) {
+            List<ProductSizeGetIdInf> productSizeInf = productSizeRepository.getSizeProductID(id);
+            List<ProductColorGetInf> productColorListInf = productColorRepository.getColor(id);
+            if (productInf == null && productSizeInf == null) {
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
+            List<ProductSizeGetDto> sizeProductSize = Common.mapList(productSizeInf, ProductSizeGetDto.class);
             ProductGetByIdDto productGetAll = mapper.map(productInf, ProductGetByIdDto.class);
+            List<ProductColorGetDto> colorGetDto =  Common.mapList(productColorListInf, ProductColorGetDto.class);
+
+            ProductDetailDto productDetailDto = new ProductDetailDto(productGetAll, sizeProductSize, colorGetDto);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(productGetAll);
+            res.setResult(productDetailDto);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
@@ -91,8 +103,6 @@ public class ProductServiceImp implements ProductService {
         Account account = Common.getCurrentUserLogin();
         Product product = new Product();
 
-        ProductColor productColor = new ProductColor();
-        ProductSize productSize = new ProductSize();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             ProductCreateDto productCreateDto = objectMapper.readValue(str, ProductCreateDto.class);
@@ -133,11 +143,14 @@ public class ProductServiceImp implements ProductService {
             productRepository.save(product);
 
             for (Long sizeId : productCreateDto.getSizeId()) {
+                ProductSize productSize = new ProductSize();
                 productSize.setSizeId(sizeId);
                 productSize.setProductId(product.getId());
                 productSizeRepository.save(productSize);
             }
+
             for (Long colorId : productCreateDto.getColorId()) {
+                ProductColor productColor = new ProductColor();
                 productColor.setColorId(colorId);
                 productColor.setProductId(product.getId());
                 productColorRepository.save(productColor);
