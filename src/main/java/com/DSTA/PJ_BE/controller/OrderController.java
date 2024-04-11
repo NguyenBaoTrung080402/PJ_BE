@@ -20,7 +20,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("order")
+    @PostMapping("/create-order")
     public DataResponse order(@RequestBody Order order){
         log.debug("Controller Request Order");
         DataResponse res = orderService.createOrder(order);

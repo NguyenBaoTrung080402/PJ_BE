@@ -178,8 +178,7 @@ public class ProductServiceImp implements ProductService {
 
             Product product = productRepository.getProductByID(id);
             WishList wishList = wishListRepository.getWLbyProdyctID(product.getId());
-            ProductColor productColor = productColorRepository.getProductColorByProductId(product.getId());
-            ProductSize productSize = productSizeRepository.getProductSizeByProductId(product.getId());
+            
             if (
                     productCreateDto.getName().length() < 5 ||
                             productCreateDto.getSlug().length() < 5 ||
@@ -214,15 +213,30 @@ public class ProductServiceImp implements ProductService {
             product.setBrandsId(productCreateDto.getBrandsId());
             productRepository.save(product);
 
-            for (Long colorId : productCreateDto.getColorId()) {
-                productColor.setColorId(colorId);
-                productColorRepository.save(productColor);
-            }
+            List<ProductColor> productColor = productColorRepository.getProductColorByProductId(product.getId());
+            List<ProductSize> productSize = productSizeRepository.getProductSizeByProductId(product.getId());
 
-            for (Long sizeId : productCreateDto.getSizeId()) {
-                productSize.setSizeId(sizeId);
-                productSizeRepository.save(productSize);
-            }
+            // Xóa các bản ghi ProductColor và ProductSize hiện có
+        for (ProductColor pc : productColor) {
+            productColorRepository.delete(pc);
+        }
+        for (ProductSize ps : productSize) {
+            productSizeRepository.delete(ps);
+        }
+
+        // Tạo mới các bản ghi ProductColor và ProductSize
+        for (Long colorId : productCreateDto.getColorId()) {
+            ProductColor newProductColor = new ProductColor();
+            newProductColor.setColorId(colorId);
+            newProductColor.setProductId(product.getId());
+            productColorRepository.save(newProductColor);
+        }
+        for (Long sizeId : productCreateDto.getSizeId()) {
+            ProductSize newProductSize = new ProductSize();
+            newProductSize.setProductId(product.getId());
+            newProductSize.setSizeId(sizeId);
+            productSizeRepository.save(newProductSize);
+        }
             
             
             if(wishList != null && wishList.getProductId() != null){
@@ -246,19 +260,28 @@ public class ProductServiceImp implements ProductService {
     public DataResponse deleteProducts(Long id) {
         log.debug("Request Delete Product ");
         DataResponse res = new DataResponse();
+        Account account = Common.getCurrentUserLogin();
         try {
             Product product = productRepository.getProductByID(id);
-            ProductColor productColor = productColorRepository.getProductColorByProductId(product.getId());
-            ProductSize productSize = productSizeRepository.getProductSizeByProductId(product.getId());
 
             if(product == null){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
-            productColorRepository.delete(productColor);
-            productSizeRepository.delete(productSize);
+            List<ProductColor> productColors = productColorRepository.getProductColorByProductId(product.getId());
+            for (ProductColor productColor : productColors) {
+                productColorRepository.delete(productColor);
+            }
+
+            List<ProductSize> productSizes = productSizeRepository.getProductSizeByProductId(product.getId());
+            for (ProductSize productSize : productSizes) {
+                productSizeRepository.delete(productSize);
+            }
+            String imgPath = Constants.IMG_PRODUCT_SAVE + account.getId();
+            Common.deleteImageFolder(imgPath);
             productRepository.delete(product);
+            
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.DELETE_SUCCESS);
             return res;
