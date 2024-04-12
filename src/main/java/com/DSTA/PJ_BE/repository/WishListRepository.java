@@ -29,5 +29,5 @@ public interface WishListRepository extends JpaRepository<WishList, Long> {
     void removeFromWishList(@Param("id") Long id);
 
     @Query(value = "SELECT wl FROM WishList wl WHERE wl.productId = :id")
-    WishList getWLbyProdyctID(@Param("id") Long id);
+    List<WishList> getWLbyProdyctID(@Param("id") Long id);
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductColorRepository extends JpaRepository<ProductColor, Long> {
     @Query(value = "SELECT * FROM product_color WHERE product_id = :id", nativeQuery = true)
-    ProductColor getProductColorByProductId(@Param("id") Long id);
+    List<ProductColor> getProductColorByProductId(@Param("id") Long id);
 
     @Query(value = "SELECT c.name as nameColor, pc.id as id FROM ProductColor pc JOIN Color c ON pc.colorId = c.id WHERE pc.productId = :id ")
     List<ProductColorGetInf> getColor(@Param("id") Long id);

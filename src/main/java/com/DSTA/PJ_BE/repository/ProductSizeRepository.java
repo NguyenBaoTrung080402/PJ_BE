@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductSizeRepository extends JpaRepository<ProductSize, Long> {
     @Query(value = "SELECT * FROM product_size pz WHERE pz.product_id = :id", nativeQuery = true)
-    ProductSize getProductSizeByProductId(@Param("id") Long id);
+    List<ProductSize> getProductSizeByProductId(@Param("id") Long id);
 
     @Query(value = "SELECT pz.id, s.size_name as nameSize FROM product_size pz JOIN size s ON pz.size_id = s.id WHERE pz.product_id = :id", nativeQuery = true)
     List<ProductSizeGetIdInf> getSizeProductID(Long id);
