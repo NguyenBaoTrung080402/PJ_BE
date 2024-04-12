@@ -174,10 +174,11 @@ public class ProductServiceImp implements ProductService {
         Account account = Common.getCurrentUserLogin();
         DataResponse res = new DataResponse();
         try {
-            ProductCreateDto productCreateDto = Common.convertStringToObject(str, ProductCreateDto.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductCreateDto productCreateDto = objectMapper.readValue(str, ProductCreateDto.class);
 
             Product product = productRepository.getProductByID(id);
-            WishList wishList = wishListRepository.getWLbyProdyctID(product.getId());
+            List<WishList> wishList = wishListRepository.getWLbyProdyctID(product.getId());
             
             if (
                     productCreateDto.getName().length() < 5 ||
@@ -190,6 +191,7 @@ public class ProductServiceImp implements ProductService {
                 res.setMessage(Constants.ERROR_ADD_NEW_PRODUCT);
                 return res;
             }
+
             if (file != null || !file.isEmpty()) {
                 String imgUrl = Constants.IMG_PRODUCT_SAVE + account.getId() + "/" + Common.currentDate() + "/";
                 String img = Common.saveFile(file, imgUrl, account.getId(), product.getName());
@@ -239,11 +241,11 @@ public class ProductServiceImp implements ProductService {
         }
             
             
-            if(wishList != null && wishList.getProductId() != null){
-                wishListRepository.delete(wishList);
+            if(!wishList.isEmpty() ){
+                wishListRepository.deleteAll(wishList);
             }else {
                 res.setStatus(Constants.SUCCESS);
-                res.setMessage(Constants.ADD_SUCCESS);
+                res.setMessage(Constants.UPDATE_SUCCESS);
                 res.setResult(product);
             }
             return res;
