@@ -51,23 +51,38 @@ public class WishListServiceImp implements WishListService {
 
             List<WishList> existingWishListItems = wishListRepository.findByUserIdAndProductId(account.getId(), product.getId());
 
-            if (!existingWishListItems.isEmpty()) {
-
-                WishList existingWishListItem = existingWishListItems.get(0);
-                existingWishListItem.setQuantity(existingWishListItem.getQuantity() + wishListAddDto.getQuantity());
-                existingWishListItem.setColorName(wishListAddDto.getNameColor());
-                existingWishListItem.setSizeName(wishListAddDto.getNameSize());
-                existingWishListItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(existingWishListItem.getQuantity())));
-                wishListRepository.save(existingWishListItem);
-                res.setMessage(Constants.UPDATE_SUCCESS);
-                res.setResult(existingWishListItem);
-
-            } else {
+            if (!existingWishListItems.isEmpty()){
+                boolean isMatchFound = false;
+                for (WishList existingWishListItem : existingWishListItems) {
+                    if (existingWishListItem.getColorName().equals(wishListAddDto.getNameColor()) && 
+                        existingWishListItem.getSizeName().equals(wishListAddDto.getNameSize())) {
+                        existingWishListItem.setQuantity(existingWishListItem.getQuantity() + wishListAddDto.getQuantity());
+                        existingWishListItem.setPrice(product.getDiscountedPrice().multiply(BigDecimal.valueOf(existingWishListItem.getQuantity())));
+                        wishListRepository.save(existingWishListItem);
+                        res.setMessage(Constants.UPDATE_SUCCESS);
+                        res.setResult(existingWishListItem); 
+                        isMatchFound = true;
+                        break;
+                    }
+                }
+            
+                if (!isMatchFound) {
+                    list.setUserId(account.getId());
+                    list.setProductId(product.getId());
+                    list.setColorName(wishListAddDto.getNameColor());
+                    list.setSizeName(wishListAddDto.getNameSize());
+                    list.setDiscountedPrice(product.getDiscountedPrice());
+                    list.setPrice(product.getDiscountedPrice().multiply(BigDecimal.valueOf(wishListAddDto.getQuantity())));
+                    wishListRepository.save(list);
+                    res.setMessage(Constants.ADD_SUCCESS); 
+                }
+            }else{
                 list.setUserId(account.getId());
                 list.setProductId(product.getId());
                 list.setColorName(wishListAddDto.getNameColor());
                 list.setSizeName(wishListAddDto.getNameSize());
-                list.setPrice(product.getPrice().multiply(BigDecimal.valueOf(wishListAddDto.getQuantity())));
+                list.setDiscountedPrice(product.getDiscountedPrice());
+                list.setPrice(product.getDiscountedPrice().multiply(BigDecimal.valueOf(wishListAddDto.getQuantity())));
                 wishListRepository.save(list);
                 res.setMessage(Constants.ADD_SUCCESS);
             }

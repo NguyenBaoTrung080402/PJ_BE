@@ -1,8 +1,6 @@
 package com.DSTA.PJ_BE.service.imp;
 
-import com.DSTA.PJ_BE.dto.Order.OderViewDto;
-import com.DSTA.PJ_BE.dto.Order.OrderUpdateDto;
-import com.DSTA.PJ_BE.dto.Order.OrderViewInfDto;
+import com.DSTA.PJ_BE.dto.Order.*;
 import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.entity.Order;
 import com.DSTA.PJ_BE.entity.WishList;
@@ -153,14 +151,14 @@ public class OrderServiceImp implements OrderService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            List<OrderViewInfDto> listOdered = orderRepository.getOrderedProcessing(account.getId());
+            List<OderViewStatusInfDto> listOdered = orderRepository.getOrderedProcessing(account.getId());
             if(listOdered == null || listOdered.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
 
-            List<OderViewDto> result = Common.mapList(listOdered, OderViewDto.class);
+            List<OderViewStatusDto> result = Common.mapList(listOdered, OderViewStatusDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(result);
             return res;
@@ -178,14 +176,14 @@ public class OrderServiceImp implements OrderService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            List<OrderViewInfDto> listOdered = orderRepository.getOrderedShipping(account.getId());
+            List<OderViewStatusInfDto> listOdered = orderRepository.getOrderedShipping(account.getId());
             if(listOdered == null || listOdered.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
 
-            List<OderViewDto> result = Common.mapList(listOdered, OderViewDto.class);
+            List<OderViewStatusDto> result = Common.mapList(listOdered, OderViewStatusDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(result);
             return res;
@@ -203,14 +201,14 @@ public class OrderServiceImp implements OrderService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            List<OrderViewInfDto> listOdered = orderRepository.getOrderedConfirmed(account.getId());
+            List<OderViewStatusInfDto> listOdered = orderRepository.getOrderedConfirmed(account.getId());
             if(listOdered == null || listOdered.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
 
-            List<OderViewDto> result = Common.mapList(listOdered, OderViewDto.class);
+            List<OderViewStatusDto> result = Common.mapList(listOdered, OderViewStatusDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(result);
             return res;
@@ -228,14 +226,14 @@ public class OrderServiceImp implements OrderService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            List<OrderViewInfDto> listOdered = orderRepository.getOrderedDelivered(account.getId());
+            List<OderViewStatusInfDto> listOdered = orderRepository.getOrderedDelivered(account.getId());
             if(listOdered == null || listOdered.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
 
-            List<OderViewDto> result = Common.mapList(listOdered, OderViewDto.class);
+            List<OderViewStatusDto> result = Common.mapList(listOdered, OderViewStatusDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(result);
             return res;
@@ -253,14 +251,14 @@ public class OrderServiceImp implements OrderService {
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            List<OrderViewInfDto> listOdered = orderRepository.getOrderedCanceled(account.getId());
+            List<OderViewStatusInfDto> listOdered = orderRepository.getOrderedCanceled(account.getId());
             if(listOdered == null || listOdered.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
 
-            List<OderViewDto> result = Common.mapList(listOdered, OderViewDto.class);
+            List<OderViewStatusDto> result = Common.mapList(listOdered, OderViewStatusDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(result);
             return res;

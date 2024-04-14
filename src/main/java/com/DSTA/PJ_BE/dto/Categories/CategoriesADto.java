@@ -1,5 +1,9 @@
 package com.DSTA.PJ_BE.dto.Categories;
 
+import com.DSTA.PJ_BE.utils.Common;
+
+import java.io.IOException;
+
 public class CategoriesADto {
     private String name;
     private String slug;
@@ -26,6 +30,10 @@ public class CategoriesADto {
     }
 
     public void setImageCategory(String imageCategory) {
-        this.imageCategory = imageCategory;
+        try {
+            this.imageCategory = Common.convertToBase64(imageCategory);
+        } catch (IOException e) {
+            this.imageCategory = imageCategory;
+        }
     }
 }

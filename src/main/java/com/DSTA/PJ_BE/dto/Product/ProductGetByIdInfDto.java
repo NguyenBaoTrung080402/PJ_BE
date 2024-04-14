@@ -21,9 +21,9 @@ public interface ProductGetByIdInfDto {
 
     public BigDecimal getDiscountedPrice();
 
-    public String getCategoriesName();
+    public Long getCategoriesId();
 
-    public String getBrandsName();
+    public Long getBrandsId();
 
     public String getStatus();
 }

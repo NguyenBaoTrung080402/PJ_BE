@@ -1,26 +1,26 @@
 package com.DSTA.PJ_BE.dto.Order;
 
-import java.io.IOException;
-
 import com.DSTA.PJ_BE.utils.Common;
 
-public class OderViewDto {
+import java.io.IOException;
+
+public class OderViewStatusDto {
     private Long id;
     private String productName;
     private String total;
-    private String userName;
     private Integer quantity;
-    private String address;
-    private String tel;
     private String image;
     private String status;
+    private String time;
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getProductName() {
         return productName;
     }
@@ -37,14 +37,6 @@ public class OderViewDto {
         this.total = total;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -53,20 +45,16 @@ public class OderViewDto {
         this.quantity = quantity;
     }
 
-    public String getAddress() {
-        return address;
+    public String getImage() {
+        return image;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setImage(String image) {
+        try {
+            this.image = Common.convertToBase64(image);
+        } catch (IOException e) {
+            this.image = image;
+        }
     }
 
     public String getStatus() {
@@ -77,16 +65,11 @@ public class OderViewDto {
         this.status = status;
     }
 
-    public String getImage() {
-        return image;
+    public String getTime() {
+        return time;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-//        try {
-//			this.image = Common.convertToBase64(image);
-//		} catch (IOException e) {
-//			this.image = image;
-//		}
+    public void setTime(String time) {
+        this.time = time;
     }
 }

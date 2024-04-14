@@ -1,6 +1,9 @@
 package com.DSTA.PJ_BE.dto.Product;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import com.DSTA.PJ_BE.utils.Common;
 
 public class ProductGetByIdDto {
     private String name;
@@ -12,8 +15,8 @@ public class ProductGetByIdDto {
     private Integer stock;
     private BigDecimal price;
     private BigDecimal discountedPrice;
-    private String categoriesName;
-    private String brandsName;
+    private Long categoriesId;
+    private Long brandsId;
     private String status;
 
     public String getName() {
@@ -61,7 +64,11 @@ public class ProductGetByIdDto {
     }
 
     public void setImage(String image) {
-        this.image = image;
+        try {
+			this.image = Common.convertToBase64(image);
+		} catch (IOException e) {
+			this.image = image;
+		}
     }
 
     public Integer getStock() {
@@ -88,22 +95,6 @@ public class ProductGetByIdDto {
         this.discountedPrice = discountedPrice;
     }
 
-    public String getCategoriesName() {
-        return categoriesName;
-    }
-
-    public void setCategoriesName(String categoriesName) {
-        this.categoriesName = categoriesName;
-    }
-
-    public String getBrandsName() {
-        return brandsName;
-    }
-
-    public void setBrandsName(String brandsName) {
-        this.brandsName = brandsName;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -111,4 +102,21 @@ public class ProductGetByIdDto {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public Long getCategoriesId() {
+        return categoriesId;
+    }
+    
+    public void setCategoriesId(Long categoriesId) {
+        this.categoriesId = categoriesId;
+    }
+    
+    public Long getBrandsId() {
+        return brandsId;
+    }
+
+    public void setBrandsId(Long brandsId) {
+        this.brandsId = brandsId;
+    }
 }
+

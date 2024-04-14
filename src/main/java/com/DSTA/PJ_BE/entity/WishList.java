@@ -21,6 +21,9 @@ public class WishList {
     private String sizeName;
     @Column(name= "color_name", columnDefinition = "VARCHAR(10)", nullable = false)
     private String colorName;
+
+    @Column(name = "discounted_price", columnDefinition = "NUMERIC(10,2)", nullable = false)
+    private BigDecimal  discountedPrice;
     public Long getId() {
         return id;
     }
@@ -72,5 +75,12 @@ public class WishList {
     }
     public void setColorName(String colorName) {
         this.colorName = colorName;
+    }
+
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
+    }
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+        this.discountedPrice = discountedPrice;
     }
 }

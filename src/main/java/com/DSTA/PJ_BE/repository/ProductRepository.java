@@ -26,7 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     @Query(value = "SELECT p.name_product as name, p.slug_product as slug, p.information as information, p.summary as summary,"+
             "       p.description as description, p.image as image, p.stock as stock, p.price as price, p.discounted_price as discountedPrice,"+
-            "       p.status as status, c.name_category as categoriesName, b.name_brand as brandsName " +
+            "       p.status as status, c.id as categoriesId, b.id as brandsId " +
             "FROM product p " +
             "JOIN categories c ON p.categories_id = c.id " +
             "JOIN brand b ON p.brands_id = b.id " +

@@ -9,4 +9,7 @@ public interface WishListDtoItf {
     Integer getQuantityProduct();
     String getImage();
     BigDecimal getTotal();
+    String getSize();
+    String getColor();
+    BigDecimal getDiscountedPrice();
 }
