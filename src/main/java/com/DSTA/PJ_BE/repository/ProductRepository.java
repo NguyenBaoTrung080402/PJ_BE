@@ -13,12 +13,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT p.id AS id, p.name_product as name, p.slug_product as slug, p.information as information, p.summary as summary," +
-            "       p.description as description, p.image as image, p.stock as stock, p.price as price, p.discounted_price as discountedPrice," +
-            "       p.status as status, c.name_category as categoriesName, b.name_brand as brandsName " +
-            "FROM product p " +
-            "JOIN categories c ON p.categories_id = c.id " +
-            "JOIN brand b ON p.brands_id = b.id ORDER BY p.id ASC ", nativeQuery = true)
+    @Query
+    (
+        value = "SELECT p.id as id, p.name_product as name, p.slug_product as slug, p.information as information, " +
+    "p.summary as summary, p.description as description, p.image as image, p.stock as stock, p.price as price, " +
+    "p.discounted_price as discountedPrice, p.status as status, c.name_category AS categoriesName, " +
+    "b.name_brand AS brandsName " +
+    "FROM product p " +
+    "JOIN categories c ON p.categories_id = c.id " +
+    "JOIN brand b ON p.brands_id = b.id " +
+    "ORDER BY p.id ASC ", nativeQuery = true
+    )
     Page<ProductGetAllInfDto> getAllProductInf(Pageable pageable);
 
     @Query(value = "SELECT p FROM Product p WHERE p.id = :id")
