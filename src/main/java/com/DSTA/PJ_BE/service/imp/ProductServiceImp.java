@@ -17,6 +17,7 @@ import com.DSTA.PJ_BE.utils.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+// import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -45,7 +46,6 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     private ProductColorRepository productColorRepository;
-
     @Override
     public DataResponse getAllProducts(Pageable pageable) {
         log.debug("Request Get All Product");
