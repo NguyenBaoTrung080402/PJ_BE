@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.DSTA.PJ_BE.dto.ProductColorDto.ProductColorGetDto;
 import com.DSTA.PJ_BE.dto.ProductSizeDto.ProductSizeGetDto;
-import com.DSTA.PJ_BE.entity.ProductColor;
 
 public class ProductDetailDto {
     private ProductGetByIdDto product;

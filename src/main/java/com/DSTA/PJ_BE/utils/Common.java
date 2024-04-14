@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.domain.Page;
@@ -21,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class Common {
 	private static ModelMapper mapper = context.getBean(ModelMapper.class);
 	private static ObjectMapper oMapper = new ObjectMapper();
 	private static Gson gson = new Gson();
-	private final Logger log = LoggerFactory.getLogger(Common.class);
+	
 	public static <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
 		return source.stream().map(element -> mapper.map(element, targetClass)).collect(Collectors.toList());
 	}
@@ -160,19 +159,18 @@ public class Common {
 	}
 
 	public static String convertToBase64(String path) throws IOException {
-		FileInputStream fileInputStream;
-		File file;
 		try {
-			file = new File(path);
-			fileInputStream = new FileInputStream(file);
-		} catch (Exception e) {
-			file = new File("./assets/no_image.jpg");
-			fileInputStream = new FileInputStream(file);
-		}
+			FileInputStream fileInputStream = new FileInputStream(path);
+			byte[] bytes = new byte[(int) new java.io.File(path).length()];
+			fileInputStream.read(bytes);
+			fileInputStream.close();
 
-		byte[] fileByte = new byte[(int) file.length()];
-		fileInputStream.read(fileByte);
-		fileInputStream.close();
-		return Base64.getEncoder().encodeToString(fileByte);
+			// Tạo chuỗi base64 với định dạng đúng
+			String base64 = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(bytes);
+			return base64;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

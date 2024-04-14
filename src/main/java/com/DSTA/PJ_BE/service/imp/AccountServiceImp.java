@@ -110,7 +110,7 @@ public class AccountServiceImp implements AccountService {
                 res.setMessage(Constants.UPDATE_FAIL);
                 return res;
             }
-            if(file != null || !file.isEmpty()){
+            if(file != null && !file.isEmpty()){
                 String avatarUrl = Constants.AVATAR_SAVE + account.getId() + "/" + Common.currentDate() + "/";
                 String image = Common.saveFile(file, avatarUrl, account.getId(), account.getName());
                 if(image != null){

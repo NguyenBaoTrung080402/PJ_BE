@@ -83,7 +83,7 @@ public class ProductServiceImp implements ProductService {
             }
             List<ProductSizeGetDto> sizeProductSize = Common.mapList(productSizeInf, ProductSizeGetDto.class);
             ProductGetByIdDto productGetAll = mapper.map(productInf, ProductGetByIdDto.class);
-            List<ProductColorGetDto> colorGetDto =  Common.mapList(productColorListInf, ProductColorGetDto.class);
+            List<ProductColorGetDto> colorGetDto = Common.mapList(productColorListInf, ProductColorGetDto.class);
 
             ProductDetailDto productDetailDto = new ProductDetailDto(productGetAll, sizeProductSize, colorGetDto);
             res.setStatus(Constants.SUCCESS);
@@ -113,21 +113,19 @@ public class ProductServiceImp implements ProductService {
                     productCreateDto.getSlug().length() < 5 ||
                     productCreateDto.getDescription().length() < 10 ||
                     productCreateDto.getInformation().length() < 10 ||
-                    productCreateDto.getSummary().length() < 10
-            ) {
+                    productCreateDto.getSummary().length() < 10 || 
+                    productCreateDto.getColorId() == null || 
+                    productCreateDto.getSizeId() == null
+                ) {
                 res.setStatus(Constants.ERROR);
                 res.setMessage(Constants.ERROR_ADD_NEW_PRODUCT);
                 return res;
             }
-            if (file != null || !file.isEmpty()) {
                 String imgUrl = Constants.IMG_PRODUCT_SAVE + account.getId() + "/" + Common.currentDate() + "/";
                 String img = Common.saveFile(file, imgUrl, account.getId(), product.getName());
                 if (img != null) {
                     product.setImage(img);
                 }
-            } else {
-                product.setImage(product.getImage());
-            }
 
             product.setName(productCreateDto.getName());
             product.setSlug(productCreateDto.getSlug());
@@ -179,20 +177,18 @@ public class ProductServiceImp implements ProductService {
 
             Product product = productRepository.getProductByID(id);
             List<WishList> wishList = wishListRepository.getWLbyProdyctID(product.getId());
-            
-            if (
-                    productCreateDto.getName().length() < 5 ||
-                            productCreateDto.getSlug().length() < 5 ||
-                            productCreateDto.getDescription().length() < 10 ||
-                            productCreateDto.getInformation().length() < 10 ||
-                            productCreateDto.getSummary().length() < 10
-            ) {
+
+            if (productCreateDto.getName().length() < 5 ||
+                    productCreateDto.getSlug().length() < 5 ||
+                    productCreateDto.getDescription().length() < 10 ||
+                    productCreateDto.getInformation().length() < 10 ||
+                    productCreateDto.getSummary().length() < 10) {
                 res.setStatus(Constants.ERROR);
                 res.setMessage(Constants.ERROR_ADD_NEW_PRODUCT);
                 return res;
             }
 
-            if (file != null || !file.isEmpty()) {
+            if (file != null && !file.isEmpty()) {
                 String imgUrl = Constants.IMG_PRODUCT_SAVE + account.getId() + "/" + Common.currentDate() + "/";
                 String img = Common.saveFile(file, imgUrl, account.getId(), product.getName());
                 if (img != null) {
@@ -218,39 +214,40 @@ public class ProductServiceImp implements ProductService {
             List<ProductColor> productColor = productColorRepository.getProductColorByProductId(product.getId());
             List<ProductSize> productSize = productSizeRepository.getProductSizeByProductId(product.getId());
 
-            // Xóa các bản ghi ProductColor và ProductSize hiện có
-        for (ProductColor pc : productColor) {
-            productColorRepository.delete(pc);
-        }
-        for (ProductSize ps : productSize) {
-            productSizeRepository.delete(ps);
-        }
+            if (productCreateDto.getColorId() != null) {
+                for (ProductColor pc : productColor) {
+                    productColorRepository.delete(pc);
+                }
+                for (Long colorId : productCreateDto.getColorId()) {
+                    ProductColor newProductColor = new ProductColor();
+                    newProductColor.setColorId(colorId);
+                    newProductColor.setProductId(product.getId());
+                    productColorRepository.save(newProductColor);
+                }
+            }
 
-        // Tạo mới các bản ghi ProductColor và ProductSize
-        for (Long colorId : productCreateDto.getColorId()) {
-            ProductColor newProductColor = new ProductColor();
-            newProductColor.setColorId(colorId);
-            newProductColor.setProductId(product.getId());
-            productColorRepository.save(newProductColor);
-        }
-        for (Long sizeId : productCreateDto.getSizeId()) {
-            ProductSize newProductSize = new ProductSize();
-            newProductSize.setProductId(product.getId());
-            newProductSize.setSizeId(sizeId);
-            productSizeRepository.save(newProductSize);
-        }
-            
-            
-            if(!wishList.isEmpty() ){
+            if (productCreateDto.getSizeId() != null) {
+                for (ProductSize ps : productSize) {
+                    productSizeRepository.delete(ps);
+                }
+                for (Long sizeId : productCreateDto.getSizeId()) {
+                    ProductSize newProductSize = new ProductSize();
+                    newProductSize.setProductId(product.getId());
+                    newProductSize.setSizeId(sizeId);
+                    productSizeRepository.save(newProductSize);
+                }
+            }
+
+            if (!wishList.isEmpty()) {
                 wishListRepository.deleteAll(wishList);
-            }else {
+            } else {
                 res.setStatus(Constants.SUCCESS);
                 res.setMessage(Constants.UPDATE_SUCCESS);
                 res.setResult(product);
             }
             return res;
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             res.setStatus(Constants.ERROR);
             res.setMessage(Constants.SYSTEM_ERROR);
@@ -266,7 +263,7 @@ public class ProductServiceImp implements ProductService {
         try {
             Product product = productRepository.getProductByID(id);
 
-            if(product == null){
+            if (product == null) {
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
@@ -283,11 +280,11 @@ public class ProductServiceImp implements ProductService {
             String imgPath = Constants.IMG_PRODUCT_SAVE + account.getId();
             Common.deleteImageFolder(imgPath);
             productRepository.delete(product);
-            
+
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.DELETE_SUCCESS);
             return res;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
             res.setMessage(Constants.SYSTEM_ERROR);
             return res;

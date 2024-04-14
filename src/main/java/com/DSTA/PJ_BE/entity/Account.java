@@ -1,6 +1,9 @@
 package com.DSTA.PJ_BE.entity;
 
+import com.DSTA.PJ_BE.utils.Common;
+
 import javax.persistence.*;
+import java.io.IOException;
 
 @Entity
 @Table(name = "user")
@@ -105,5 +108,10 @@ public class Account {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+//        try {
+//            this.avatar = Common.convertToBase64(avatar);
+//        } catch (IOException e) {
+//            this.avatar = avatar;
+//        }
     }
 }

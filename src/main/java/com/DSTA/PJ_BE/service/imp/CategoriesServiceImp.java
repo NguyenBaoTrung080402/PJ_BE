@@ -1,6 +1,8 @@
 package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.dto.Categories.CategoriesADto;
+import com.DSTA.PJ_BE.dto.Categories.CategoriesGetAllDto;
+import com.DSTA.PJ_BE.dto.Categories.CategoriesViewAllDtoInf;
 import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.entity.Categories;
 import com.DSTA.PJ_BE.repository.CategoryRepository;
@@ -44,15 +46,11 @@ public class CategoriesServiceImp implements CategoriesService {
                 res.setMessage(Constants.ERROR_ADD_NEW_CATEGORIES);
                 return res;
             }
-            if(file != null || !file.isEmpty()){
                 String imageUrl = Constants.IMG_CATEGORY_SAVE + account.getId() + "/" + Common.currentDate()+ "/";
                 String img = Common.saveFile(file, imageUrl, account.getId(), categories.getName());
                 if (img != null){
                     categories.setImageCategory(img);
                 }
-            }else {
-                categories.setImageCategory(categories.getImageCategory());
-            }
             categories.setName(categoriesADto.getName());
             categories.setSlug(categoriesADto.getSlug());
             categoryRepository.save(categories);
@@ -72,14 +70,15 @@ public class CategoriesServiceImp implements CategoriesService {
         log.debug("Requtest Get All Categories");
         DataResponse res = new DataResponse();
         try {
-            List<Categories> listCate = categoryRepository.getALlCate();
+            List<CategoriesViewAllDtoInf> listCate = categoryRepository.getALlCate();
             if(listCate == null || listCate.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.CATEGORIES_NOT_FOUND);
                 return res;
             }
+            List<CategoriesGetAllDto> cateList = Common.mapList(listCate, CategoriesGetAllDto.class);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(listCate);
+            res.setResult(cateList);
             return res;
         }catch (Exception ex){
             res.setStatus(Constants.ERROR);
@@ -127,7 +126,7 @@ public class CategoriesServiceImp implements CategoriesService {
                res.setMessage(Constants.ERROR_ADD_NEW_CATEGORIES);
                return res;
            }
-           if(file != null || !file.isEmpty()){
+           if(file != null && !file.isEmpty()){
                String imageUrl = Constants.IMG_CATEGORY_SAVE + account.getId() + "/" + Common.currentDate()+ "/";
                String img = Common.saveFile(file, imageUrl, categories.getId(), categories.getName());
                if(img != null){

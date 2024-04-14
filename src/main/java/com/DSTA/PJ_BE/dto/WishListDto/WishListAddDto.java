@@ -9,6 +9,14 @@ public class WishListAddDto {
     private BigDecimal price;
     private String nameSize;
     private String nameColor;
+    private BigDecimal discountedPrice;
+
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
+    }
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
 
     public Long getUserId() {
         return userId;

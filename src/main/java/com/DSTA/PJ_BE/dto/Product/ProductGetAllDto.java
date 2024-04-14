@@ -1,6 +1,9 @@
 package com.DSTA.PJ_BE.dto.Product;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import com.DSTA.PJ_BE.utils.Common;
 
 public class ProductGetAllDto {
     private Long id;
@@ -68,7 +71,11 @@ public class ProductGetAllDto {
     }
 
     public void setImage(String image) {
-        this.image = image;
+        try {
+			this.image = Common.convertToBase64(image);
+		} catch (IOException e) {
+			this.image = image;
+		}
     }
 
     public Integer getStock() {
