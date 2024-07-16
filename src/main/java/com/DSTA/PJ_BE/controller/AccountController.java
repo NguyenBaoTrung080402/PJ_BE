@@ -62,6 +62,14 @@ public class AccountController {
         }
 
     }
+    
+    @GetMapping("/current-account")
+    public Account getAccount() {
+        log.debug("Get Current Accout");
+        Account account = accountService.getAccountLogin();
+        return account;
+    }
+
     @PostMapping("/register")
     public DataResponse register(@RequestBody AccountRegisterDto accountRegisterDto) throws Exception{
         log.debug("Request Register");
