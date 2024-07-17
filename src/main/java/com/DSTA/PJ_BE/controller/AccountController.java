@@ -77,6 +77,13 @@ public class AccountController {
         return res;
     }
 
+    @PostMapping("/verify-otp")
+    public DataResponse verifyOtp(@RequestParam("email") String email, @RequestParam("otp") String otp) throws Exception {
+        log.debug("Request Register");
+        DataResponse res = accountService.completeRegistration(email, otp);
+        return res;
+    }
+
     @PutMapping("/update-account")
     public DataResponse updateUser(MultipartHttpServletRequest data){
         log.debug("Update User Controller");

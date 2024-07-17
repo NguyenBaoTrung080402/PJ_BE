@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Validate {
     private static final Scanner sc = new Scanner(System.in);
     private static Matcher matcher;
-    private static final String EMAIL_REGEX = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
     private static final String TEL_REGEX = "^0([3|5|7|8|9])([0-9]){8}$";
     private static Pattern pattern;
     

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[JOT] Thông tin tài khoản</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 10px;
+        	border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .account-info {
+            margin-top: 10px;
+        }
+
+        .system-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .footer {
+            color: #777;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>[JOT] Thông tin tài khoản</h2>
+        </div>
+        <div class="content">
+            <p>Kính chào <strong th:text="${account.name}"></strong>,</p>
+            <p>Tài khoản đăng nhập vào hệ thống JOT của bạn được xác thực thành công.</p>
+            <p>Dưới đây là mật khẩu mới của bạn (Vui lòng đăng nhập và đổi mật khẩu để đảm bảo thông tin của bạn được giữ an toàn):</p>
+            <div class="account-info">
+                <p>+ Tên đăng nhập: <strong th:text="${account.username}"></strong></p>
+                <p>+ Mật khẩu: <strong th:text="${account.password}"></strong></p>
+            </div>
+            ⇨ <a href="http://timviec.io.vn/jot/login">Link truy cập hệ thống</a>
+        </div>
+        <p class="footer">
+            <span>Thanks and Best Regards, </span><br>
+            <em>JOT Team.</em>
+        </p>
+    </div>
+</body>
+</html>

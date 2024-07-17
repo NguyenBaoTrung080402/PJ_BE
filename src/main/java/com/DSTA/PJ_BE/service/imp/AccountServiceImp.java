@@ -2,11 +2,17 @@ package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
+import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.Account.AccountUpdateDto;
 import com.DSTA.PJ_BE.entity.Account;
+import com.DSTA.PJ_BE.entity.Otp;
 import com.DSTA.PJ_BE.repository.AccountRepository;
+import com.DSTA.PJ_BE.repository.OtpRepository;
 import com.DSTA.PJ_BE.service.AccountService;
+import com.DSTA.PJ_BE.service.MailService;
+import com.DSTA.PJ_BE.service.OtpService;
 import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
@@ -32,6 +38,7 @@ import java.util.Collections;
 public class AccountServiceImp implements AccountService {
     
     private final Logger log = LoggerFactory.getLogger(AccountServiceImp.class);
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -39,7 +46,16 @@ public class AccountServiceImp implements AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
+    private OtpRepository otpRepository;
+
+    @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+	private MailService mailService;
+
+    @Autowired
+	private OtpService otpService;
 
     @Override
     public Account getAccountByUsername(String email) {
@@ -65,18 +81,23 @@ public class AccountServiceImp implements AccountService {
         try {
             Account account = mapper.map(accountRegisterDto, Account.class);
 
-            if(!Validate.validateEmail(account.getEmail())){
-                res.setStatus(Constants.ERROR);
-                res.setMessage(Constants.REGISTER_FAIL);
-                return res;
-            }
+            // if(!Validate.validateEmail(account.getEmail())){
+            //     res.setStatus(Constants.ERROR);
+            //     res.setMessage(Constants.REGISTER_FAIL);
+            //     return res;
+            // }
+
             account.setAuthority(getRoleJson(Authorities.CUSTOMER));
             String password = account.getPassword();
             account.setPassword(passwordEncoder.encode(password));
+
+            String otp = otpService.create(account.getEmail());
+            mailService.sendMailOtp(new AccountOtpSendMail(account.getEmail(), account.getName(), otp));
+
+            accountRepository.save(account);
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.REGISTER_SUCCESS);
-            res.setResult(account);
-            accountRepository.save(account);
+            res.setResult(account);   
             return res;
         }catch (Exception ex){
             res.setStatus(Constants.ERROR);
@@ -84,6 +105,51 @@ public class AccountServiceImp implements AccountService {
             return res;
         }
     }
+    private DataResponse verifyOtp(String email, String otp) {
+        DataResponse res = new DataResponse();
+        Otp storedOtp = otpRepository.findByEmail(email);
+        
+        if (storedOtp != null && storedOtp.getOtp().equals(otp)) {
+            res.setStatus(Constants.SUCCESS);
+            res.setMessage("OTP verified successfully");
+            return res;
+        } else {
+            res.setStatus(Constants.ERROR);
+            res.setMessage("Invalid OTP");
+            return res;
+        }
+    }
+    
+    @Override
+    public DataResponse completeRegistration(String email, String otp) {
+        DataResponse res = new DataResponse();
+        
+        // Xác minh OTP
+        DataResponse otpVerification = verifyOtp(email, otp);
+        if (otpVerification.getStatus().equals(Constants.ERROR)) {
+            return otpVerification;
+        }
+        
+        // Lấy thông tin tài khoản tạm thời
+        Account account = tempAccountStorage.findByEmail(email);
+        if (account == null) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage("Registration session expired");
+            return res;
+        }
+        
+        // Lưu tài khoản vào cơ sở dữ liệu chính
+        accountRepository.save(account);
+        
+        // Xóa thông tin tạm thời
+        tempAccountStorage.delete(email);
+        
+        res.setStatus(Constants.SUCCESS);
+        res.setMessage(Constants.REGISTER_SUCCESS);
+        res.setResult(account);
+        return res;
+    }
+
     private String getRoleJson(String role) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

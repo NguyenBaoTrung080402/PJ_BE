@@ -16,6 +16,7 @@ public interface AccountService {
 
     DataResponse register(AccountRegisterDto accountRegisterDto);
 
+    DataResponse completeRegistration(String email, String otp);
 
     DataResponse updateAccount(String str, MultipartFile file);
 
