@@ -2,18 +2,23 @@ package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.Account.AccountUpdateDto;
+import com.DSTA.PJ_BE.dto.otp.OtpDTO;
 import com.DSTA.PJ_BE.entity.Account;
+import com.DSTA.PJ_BE.entity.Otp;
 import com.DSTA.PJ_BE.repository.AccountRepository;
+import com.DSTA.PJ_BE.repository.OtpRepository;
 import com.DSTA.PJ_BE.service.AccountService;
+import com.DSTA.PJ_BE.service.MailService;
+import com.DSTA.PJ_BE.service.OtpService;
 import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import com.DSTA.PJ_BE.utils.Validate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.twilio.base.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +31,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Transactional
 public class AccountServiceImp implements AccountService {
     
     private final Logger log = LoggerFactory.getLogger(AccountServiceImp.class);
+    private final Map<String, Account> tempAccounts = new ConcurrentHashMap<>();
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -39,7 +49,16 @@ public class AccountServiceImp implements AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
+    private OtpRepository otpRepository;
+
+    @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+	private MailService mailService;
+
+    @Autowired
+	private OtpService otpService;
 
     @Override
     public Account getAccountByUsername(String email) {
@@ -64,19 +83,32 @@ public class AccountServiceImp implements AccountService {
         DataResponse res = new DataResponse();
         try {
             Account account = mapper.map(accountRegisterDto, Account.class);
+            Account accountCheck = accountRepository.getAccountUserName(account.getEmail());
 
-            if(!Validate.validateEmail(account.getEmail())){
+            if(accountCheck.getEmail() != null){
                 res.setStatus(Constants.ERROR);
-                res.setMessage(Constants.REGISTER_FAIL);
+                res.setMessage(Constants.REGISTER_MAIL_EXESIT);
                 return res;
             }
+            
+            // if(!Validate.validateEmail(account.getEmail())){
+            //     res.setStatus(Constants.ERROR);
+            //     res.setMessage(Constants.REGISTER_FAIL);
+            //     return res;
+            // }
+
             account.setAuthority(getRoleJson(Authorities.CUSTOMER));
             String password = account.getPassword();
             account.setPassword(passwordEncoder.encode(password));
+
+            String otp = otpService.create(account.getEmail());
+            mailService.sendMailOtp(new AccountOtpSendMail(account.getEmail(), account.getName(), otp));
+
+            tempAccounts.put(account.getEmail(), account);
+
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.REGISTER_SUCCESS);
-            res.setResult(account);
-            accountRepository.save(account);
+            res.setResult(account.getEmail());
             return res;
         }catch (Exception ex){
             res.setStatus(Constants.ERROR);
@@ -84,6 +116,58 @@ public class AccountServiceImp implements AccountService {
             return res;
         }
     }
+    private DataResponse verifyOtp(OtpDTO optVerify) {
+        DataResponse res = new DataResponse();
+        Optional<Otp> latestOtp  = otpRepository.findByEmail(optVerify.getEmail());
+
+        if (!latestOtp.isPresent()) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage("No OTP found for this email");
+            otpRepository.deleteByEmail(optVerify.getEmail());
+            return res;
+        }
+
+        Otp storedOtp = latestOtp.get();
+
+        if (storedOtp != null && storedOtp.getOtp().equals(optVerify.getOtp())) {
+            res.setStatus(Constants.SUCCESS);
+            res.setMessage("OTP verified successfully");
+            return res;
+        } else {
+            res.setStatus(Constants.ERROR);
+            otpRepository.deleteByEmail(optVerify.getEmail());
+            res.setMessage("Invalid OTP");
+            return res;
+        }
+    }
+    
+    @Override
+    public DataResponse completeRegistration(OtpDTO optVerify) {
+        DataResponse res = new DataResponse();
+        
+        // Xác minh OTP
+        DataResponse otpVerification = verifyOtp(optVerify);
+        if (otpVerification.getStatus().equals(Constants.ERROR)) {
+            return otpVerification;
+        }
+        
+        // Lấy thông tin tài khoản tạm thời
+        Account account = tempAccounts.remove(optVerify.getEmail());
+        if (account == null) {
+            res.setStatus(Constants.ERROR);
+            otpRepository.deleteByEmail(optVerify.getEmail());
+            res.setMessage("Registration session expired");
+            return res;
+        }
+        
+        accountRepository.save(account);
+
+        res.setStatus(Constants.SUCCESS);
+        res.setMessage(Constants.REGISTER_SUCCESS);
+        res.setResult(account);
+        return res;
+    }
+
     private String getRoleJson(String role) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

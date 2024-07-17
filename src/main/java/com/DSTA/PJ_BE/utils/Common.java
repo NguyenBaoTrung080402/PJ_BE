@@ -96,12 +96,26 @@ public class Common {
 		SimpleDateFormat f = new SimpleDateFormat(Constants.YYYYMMDDHHMMSS);
 		return f.format(new Date());
 	}
-
+	public static Date getCurrentDateTime() {
+		SimpleDateFormat f = new SimpleDateFormat(Constants.YYYYMMDDHHMMSS);
+		try {
+			return f.parse(Common.currentDateTime());
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	public static String currentTime() {
 		SimpleDateFormat f = new SimpleDateFormat(Constants.HHMMSS);
 		return f.format(new Date());
 	}
-
+	public static Date getDateTime(String yyyyMMddHHmmss) {
+		SimpleDateFormat f = new SimpleDateFormat(Constants.YYYYMMDDHHMMSS);
+		try {
+			return f.parse(yyyyMMddHHmmss);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	public static String currentDate() {
 		SimpleDateFormat f = new SimpleDateFormat(Constants.YYYYMMDD);
 		return f.format(new Date());

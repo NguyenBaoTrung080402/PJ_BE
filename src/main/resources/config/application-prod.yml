@@ -25,10 +25,10 @@ spring:
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: smtp.gmail.com
+    port: 587
+    username: taokhongpk9b@gmail.com
+    password: mjlrxkygsbljjvpb
 
 server:
   port: 8080

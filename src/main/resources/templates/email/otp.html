@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[JOT] Mã OTP dùng một lần</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 10px;
+        	border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .otp {
+            font-weight: bold;
+            color: black;
+        }
+
+        .footer {
+            color: #777;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>[JOT] Mã OTP dùng một lần</h1>
+        </div>
+        <div class="content">
+            <p>Kính chào <strong th:text="${account.name}"></strong>,</p>
+            <p>Dưới đây là thông tin mã OTP dùng một lần của hệ thống JOT cho hành động lấy lại mật khẩu.</p>
+            <p>Vui lòng không chia sẻ mã OTP này với bất kỳ ai.</p>
+            <p>Mã OTP của bạn là: <span class="otp" th:text="${account.otp}"></span></p>
+            <p>Lưu ý: mã OTP chỉ có thời hạn trong 3 phút.</p>
+        </div>
+        <p class="footer">
+            <span>Thanks and Best Regards, </span><br>
+            <em>JOT Team.</em>
+        </p>
+    </div>
+</body>
+</html>
