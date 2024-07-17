@@ -3,15 +3,15 @@ package com.DSTA.PJ_BE.dto.otp;
 public class OtpDTO {
     private String otp;
 	
-	private Long accountId;
+	private String email;
 
 	public OtpDTO() {
 	}
 
-	public OtpDTO(String otp, Long accountId) {
+	public OtpDTO(String otp, String email) {
 		super();
 		this.otp = otp;
-		this.accountId = accountId;
+		this.email = email;
 	}
 
 	public String getOtp() {
@@ -22,11 +22,11 @@ public class OtpDTO {
 		this.otp = otp;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

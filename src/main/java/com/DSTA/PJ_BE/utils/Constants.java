@@ -57,6 +57,8 @@ public class Constants {
 	public static final String DATE_ERROR = "Kiểu ngày tháng không hợp lệ!";
 
 	public static final String REGISTER_FAIL = "Đăng ký thất bại !";
+	
+	public static final String REGISTER_MAIL_EXESIT = "Tài khoản này đã tồn tại !";
 
 	public static final String CUSTOMER = "CUSTOMER";
 

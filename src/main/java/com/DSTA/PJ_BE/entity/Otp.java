@@ -30,7 +30,7 @@ public class Otp {
 	public Otp() {
 	}
 
-	public Otp(String otp, String createTime, String email) {
+	public Otp(String createTime, String email, String otp) {
 		super();
         this.email = email;
 		this.otp = otp;

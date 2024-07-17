@@ -6,6 +6,7 @@ import com.DSTA.PJ_BE.Security.LoginResponse;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
 import com.DSTA.PJ_BE.dto.Account.AccountLoginDto;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
+import com.DSTA.PJ_BE.dto.otp.OtpDTO;
 import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.service.AccountService;
 import com.DSTA.PJ_BE.utils.Constants;
@@ -78,9 +79,9 @@ public class AccountController {
     }
 
     @PostMapping("/verify-otp")
-    public DataResponse verifyOtp(@RequestParam("email") String email, @RequestParam("otp") String otp) throws Exception {
+    public DataResponse verifyOtp(@RequestBody OtpDTO optVerify) throws Exception {
         log.debug("Request Register");
-        DataResponse res = accountService.completeRegistration(email, otp);
+        DataResponse res = accountService.completeRegistration(optVerify);
         return res;
     }
 

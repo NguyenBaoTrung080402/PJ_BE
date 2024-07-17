@@ -2,6 +2,7 @@ package com.DSTA.PJ_BE.service;
 
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
+import com.DSTA.PJ_BE.dto.otp.OtpDTO;
 import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ public interface AccountService {
 
     DataResponse register(AccountRegisterDto accountRegisterDto);
 
-    DataResponse completeRegistration(String email, String otp);
+    DataResponse completeRegistration(OtpDTO optVerify);
 
     DataResponse updateAccount(String str, MultipartFile file);
 

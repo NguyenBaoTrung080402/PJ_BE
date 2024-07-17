@@ -52,7 +52,7 @@ public class OtpServiceImp implements OtpService{
 			sb.append(number.charAt(rnd.nextInt(number.length())));
 		}
 		String strOtp = sb.toString();
-		Otp otp = new Otp(email, strOtp, Common.currentDateTime());
+		Otp otp = new Otp(Common.currentDateTime(), email, strOtp );
 		otpRepository.save(otp);
 		return strOtp;
 	}
