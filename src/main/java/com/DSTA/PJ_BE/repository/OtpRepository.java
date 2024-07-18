@@ -3,7 +3,7 @@ package com.DSTA.PJ_BE.repository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +16,7 @@ public interface OtpRepository extends JpaRepository<Otp, Long>{
     @Query(value = "SELECT otp FROM Otp otp WHERE otp.accountId = :accountId AND otp.otp = :otp")
 	Otp getOtpByAccountIdAndOtp(@Param("accountId") Long accountId, @Param("otp") String otp);
 
-    @Query("SELECT o FROM Otp o WHERE o.email = :email ORDER BY o.createTime DESC")
+    @Query(value = "SELECT * FROM otp o WHERE o.email = :email ORDER BY o.create_time DESC LIMIT 1", nativeQuery = true)
     Optional<Otp> findByEmail(@Param("email") String email);
 
     @Modifying

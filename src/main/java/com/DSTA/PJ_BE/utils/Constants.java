@@ -64,19 +64,21 @@ public class Constants {
 
 	public static final String ROLE = "ROLE_";
 
-	public static final String SUBJECT_CREATE_ACCOUNT = "[JOT] Thông báo tạo tài khoản thành công";
+	public static final String SUBJECT_CREATE_ACCOUNT = "[Lancie Stores] Thông báo tạo tài khoản thành công";
 
-	public static final String SUBJECT_OTP = "[JOT] Thông báo mã OTP dùng một lần";
+	public static final String SUBJECT_OTP = "[Lancie Stores] Thông báo mã OTP dùng một lần";
 
 	public static final String SUCCESS_OTP = "Mật khẩu sẽ được gửi vào email.\nVui lòng kiểm tra email!";
 
 	public static final String ERROR_OTP = "Mã OTP không hợp lệ hoặc đã hết hạn!";
 
-	public static final String SUCCESS_OTP_ACCOUNT = "[JOT] Thông báo xác thực otp thành công";
+	public static final String SUCCESS_OTP_ACCOUNT = "[Lancie Stores] Thông báo xác thực otp thành công";
 
 	public static final String ACCOUNT = "account";
 
 	public static final String REGISTER_SUCCESS = "Đăng kí thành công!";
+
+	public static final String CHECK_YOUR_MAIL = "Otp sẽ được gửi vào email.\n Vui lòng kiểm tra email!";
 
 	public static final String PASSWORD_INVALID = "Mật khẩu không hợp lệ!";
 
