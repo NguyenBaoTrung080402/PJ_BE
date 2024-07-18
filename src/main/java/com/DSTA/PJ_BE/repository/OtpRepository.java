@@ -16,7 +16,7 @@ public interface OtpRepository extends JpaRepository<Otp, Long>{
     @Query(value = "SELECT otp FROM Otp otp WHERE otp.accountId = :accountId AND otp.otp = :otp")
 	Otp getOtpByAccountIdAndOtp(@Param("accountId") Long accountId, @Param("otp") String otp);
 
-    @Query("SELECT o FROM Otp o WHERE o.email = :email ORDER BY o.createTime DESC")
+    @Query("SELECT o FROM Otp o WHERE o.email = :email ORDER BY o.createTime DESC LIMIT 1")
     Optional<Otp> findByEmail(@Param("email") String email);
 
     @Modifying

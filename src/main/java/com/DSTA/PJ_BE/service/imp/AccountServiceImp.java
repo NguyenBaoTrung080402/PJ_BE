@@ -104,7 +104,7 @@ public class AccountServiceImp implements AccountService {
             tempAccounts.put(account.getEmail(), account);
 
             res.setStatus(Constants.SUCCESS);
-            res.setMessage(Constants.REGISTER_SUCCESS);
+            res.setMessage(Constants.CHECK_YOUR_MAIL);
             res.setResult(account.getEmail());
             return res;
         }catch (Exception ex){
