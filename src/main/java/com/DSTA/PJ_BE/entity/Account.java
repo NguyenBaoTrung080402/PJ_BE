@@ -30,6 +30,9 @@ public class Account {
     @Column(name = "avatar", columnDefinition = "VARCHAR(200)", nullable = true)
     private String avatar;
 
+    @Column(name = "verified", columnDefinition = "BOOLEAN", nullable = true)
+    private boolean verified;
+
     public Long getId() {
         return id;
     }
@@ -113,5 +116,12 @@ public class Account {
 //        } catch (IOException e) {
 //            this.avatar = avatar;
 //        }
+    }
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 }

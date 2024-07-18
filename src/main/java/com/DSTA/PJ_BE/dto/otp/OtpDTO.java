@@ -4,7 +4,7 @@ public class OtpDTO {
     private String otp;
 	
 	private String email;
-
+	
 	public OtpDTO() {
 	}
 

@@ -1,5 +1,7 @@
 package com.DSTA.PJ_BE.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,12 +27,12 @@ public class Otp {
 	private String otp;
 	
 	@Column(name = "create_time", columnDefinition = "VARCHAR(50)", nullable = false)
-    private String createTime;
+    private LocalDateTime createTime;
 
 	public Otp() {
 	}
 
-	public Otp(String createTime, String email, String otp) {
+	public Otp(LocalDateTime createTime, String email, String otp) {
 		super();
         this.email = email;
 		this.otp = otp;
@@ -69,11 +71,11 @@ public class Otp {
 		this.otp = otp;
 	}
 
-	public String getCreateTime() {
+	public LocalDateTime getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(LocalDateTime createTime) {
 		this.createTime = createTime;
 	}
 }

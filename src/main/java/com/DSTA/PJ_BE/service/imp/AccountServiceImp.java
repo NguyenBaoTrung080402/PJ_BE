@@ -24,12 +24,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -85,17 +88,11 @@ public class AccountServiceImp implements AccountService {
             Account account = mapper.map(accountRegisterDto, Account.class);
             Account accountCheck = accountRepository.getAccountUserName(account.getEmail());
 
-            if(accountCheck.getEmail() != null){
+            if(accountCheck != null){
                 res.setStatus(Constants.ERROR);
                 res.setMessage(Constants.REGISTER_MAIL_EXESIT);
                 return res;
             }
-            
-            // if(!Validate.validateEmail(account.getEmail())){
-            //     res.setStatus(Constants.ERROR);
-            //     res.setMessage(Constants.REGISTER_FAIL);
-            //     return res;
-            // }
 
             account.setAuthority(getRoleJson(Authorities.CUSTOMER));
             String password = account.getPassword();
@@ -116,31 +113,46 @@ public class AccountServiceImp implements AccountService {
             return res;
         }
     }
+
+    @Scheduled(cron = "0 0 0 1 * ?")
+    @Transactional
+    public void scheduleDeleteExpiredOtps() {
+        deleteExpiredOtps();
+    }
+
+    @Transactional
+    public void deleteExpiredOtps() {
+        LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(3);
+        otpRepository.deleteByCreateTimeBefore(expirationTime);
+    }
+
     private DataResponse verifyOtp(OtpDTO optVerify) {
         DataResponse res = new DataResponse();
-        Optional<Otp> latestOtp  = otpRepository.findByEmail(optVerify.getEmail());
-
-        if (!latestOtp.isPresent()) {
+        Optional<Otp> latestOtp = otpRepository.findByEmail(optVerify.getEmail());
+    
+        if (latestOtp.isEmpty()) {
             res.setStatus(Constants.ERROR);
-            res.setMessage("No OTP found for this email");
+            res.setMessage("OTP has expired");
             otpRepository.deleteByEmail(optVerify.getEmail());
             return res;
         }
-
+    
         Otp storedOtp = latestOtp.get();
-
+        LocalDateTime now = LocalDateTime.now();
         if (storedOtp != null && storedOtp.getOtp().equals(optVerify.getOtp())) {
-            res.setStatus(Constants.SUCCESS);
-            res.setMessage("OTP verified successfully");
-            return res;
+            if (now.isBefore(storedOtp.getCreateTime().plusMinutes(3))) {
+                res.setStatus(Constants.SUCCESS);
+                otpRepository.deleteByEmail(optVerify.getEmail());
+                res.setMessage("OTP verified successfully");
+            }
         } else {
             res.setStatus(Constants.ERROR);
-            otpRepository.deleteByEmail(optVerify.getEmail());
             res.setMessage("Invalid OTP");
-            return res;
+            otpRepository.deleteByEmail(optVerify.getEmail());
         }
+        return res;
     }
-    
+
     @Override
     public DataResponse completeRegistration(OtpDTO optVerify) {
         DataResponse res = new DataResponse();
@@ -159,7 +171,8 @@ public class AccountServiceImp implements AccountService {
             res.setMessage("Registration session expired");
             return res;
         }
-        
+
+        account.setVerified(true);
         accountRepository.save(account);
 
         res.setStatus(Constants.SUCCESS);
