@@ -20,7 +20,7 @@ public class Otp {
 	@Column(name = "account_id", columnDefinition = "BIGINT")
     private Long accountId;
 	
-    @Column(name = "email", columnDefinition = "VARCHAR(20)")
+    @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
 
 	@Column(name = "otp", columnDefinition = "VARCHAR(20)", nullable = false)

@@ -1,5 +1,6 @@
 package com.DSTA.PJ_BE.config;
 
+import com.DSTA.PJ_BE.Security.CustomOAuth2UserService;
 import com.DSTA.PJ_BE.Security.JwtAuthenticationFilter;
 import com.DSTA.PJ_BE.Security.JwtConfigurer;
 import com.DSTA.PJ_BE.Security.JwtTokenProvider;
@@ -40,6 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 
+	@Autowired
+    private CustomOAuth2UserService oauthUserService;
+	
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {
 		return new JwtAuthenticationFilter(tokenProvider, userService);
@@ -75,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     .and()
         .authorizeRequests()
         .antMatchers("/api/public/**").permitAll()
-        .antMatchers("/api/account/login").permitAll()
+        .antMatchers("/api/account/login", "/api/account/oauth2/code/google").permitAll()
 		.antMatchers("/api/account/register").permitAll()
 		.antMatchers("/api/account/verify-otp/**").permitAll()
 		.antMatchers("/api/product/get-product-id/{id}").permitAll()
@@ -85,7 +89,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/api/account/verifyOtp/{otp}").permitAll()
 		.antMatchers("/api/account/createNewPass/{newPass}").permitAll()
         .anyRequest().authenticated()
-        .and().logout().logoutUrl("/api/logout").permitAll()
+        .and()
+		.logout()
+		.logoutUrl("/api/logout").permitAll()
     .and()
         .formLogin().disable()
         .httpBasic().disable() 
