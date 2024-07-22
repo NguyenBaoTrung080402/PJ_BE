@@ -13,7 +13,7 @@ public class Account {
     private Long id;
     @Column(name = "name", columnDefinition = "VARCHAR(20)", nullable = false)
     private String name;
-    @Column(name = "email", columnDefinition = "VARCHAR(20)", nullable = false, unique = true)
+    @Column(name = "email", columnDefinition = "VARCHAR(100)", nullable = false, unique = true)
     private String email;
     @Column(name = "password", columnDefinition = "VARCHAR(200)", nullable = false)
     private String password;
@@ -29,6 +29,10 @@ public class Account {
     private String gender;
     @Column(name = "avatar", columnDefinition = "VARCHAR(200)", nullable = true)
     private String avatar;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authProvider;
 
     @Column(name = "verified", columnDefinition = "BOOLEAN", nullable = true)
     private boolean verified;
@@ -123,5 +127,12 @@ public class Account {
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
     }
 }

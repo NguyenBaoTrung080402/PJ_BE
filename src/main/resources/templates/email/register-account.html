@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[JOT] Thông tin tài khoản</title>
+    <title>[Lancie Stores] Thông tin tài khoản</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,22 +56,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>[JOT] Thông tin tài khoản</h2>
+            <h2>Chào mừng đến với Lancie Stores</h2>
         </div>
         <div class="content">
             <p>Kính chào <strong th:text="${account.name}"></strong>,</p>
-            <p>Chào mừng bạn đến với JOT - Hệ thống tìm kiếm việc làm toàn quốc do đội ngũ JOT phát triển,</p>
-            <p>Tài khoản đăng nhập vào hệ thống JOT của bạn được đăng ký thành công.</p>
-            <p>Dưới đây là thông tin đăng nhập của bạn (Vui lòng đăng nhập và đổi mật khẩu để đảm bảo thông tin của bạn được giữ an toàn):</p>
-            <div class="account-info">
-                <p>+ Tên đăng nhập: <strong th:text="${account.email}"></strong></p>
-                <p>+ Mật khẩu: <strong th:text="${account.password}"></strong></p>
-            </div>
-            ⇨ <a href="http://timviec.io.vn/jot/login">Link truy cập hệ thống</a>
+            <p>Chào mừng bạn đến với Lancie Stores - Hệ thống cung cấp trang sức bạc</p>
+            <p>Tài khoản đăng nhập vào hệ thống Lancie Stores của bạn được đăng ký thành công.</p>
+            <p>Chúc <span th:text="${account.name}"></span> có những phút giây mua sắm thật vui vẻ với hệ thống của chúng tôi! </p>
+            ⇨ <a href="#">Link truy cập hệ thống</a>
         </div>
         <p class="footer">
             <span>Thanks and Best Regards, </span><br>
-            <em>JOT Team.</em>
+            <em>Lancie Stores Team.</em>
         </p>
     </div>
 </body>

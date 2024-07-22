@@ -5,4 +5,4 @@
  * @author ACER
  *
  */
-package DSTA.Cos.Cosmetics.config;
+package com.DSTA.PJ_BE.config;

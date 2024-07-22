@@ -2,6 +2,7 @@ package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.Account.AccountUpdateDto;
@@ -174,6 +175,8 @@ public class AccountServiceImp implements AccountService {
 
         account.setVerified(true);
         accountRepository.save(account);
+
+        mailService.sendMailRegister(new AccountInforSendMail(null, account.getEmail(), account.getName()));
 
         res.setStatus(Constants.SUCCESS);
         res.setMessage(Constants.REGISTER_SUCCESS);
