@@ -65,10 +65,10 @@ public class AccountController {
     }
     
     @GetMapping("/current-account")
-    public Account getAccount() {
+    public DataResponse getAccount() {
         log.debug("Get Current Accout");
-        Account account = accountService.getAccountLogin();
-        return account;
+        DataResponse res = accountService.getCurrentAccountLogin();
+        return res;
     }
 
     @PostMapping("/register")

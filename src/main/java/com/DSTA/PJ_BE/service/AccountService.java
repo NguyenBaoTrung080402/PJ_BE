@@ -15,6 +15,8 @@ public interface AccountService {
 
     Account getAccountLogin();
 
+    DataResponse getCurrentAccountLogin();
+
     DataResponse register(AccountRegisterDto accountRegisterDto);
 
     DataResponse completeRegistration(OtpDTO optVerify);

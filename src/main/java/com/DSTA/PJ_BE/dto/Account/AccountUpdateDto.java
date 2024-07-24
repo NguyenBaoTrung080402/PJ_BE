@@ -1,11 +1,16 @@
 package com.DSTA.PJ_BE.dto.Account;
 
+import java.io.IOException;
+
+import com.DSTA.PJ_BE.utils.Common;
+
 public class AccountUpdateDto {
     private String name;
     private String dob;
     private String tel;
     private String gender;
     private String address;
+    private String email;
     private String avatar;
 
     public String getName() {
@@ -53,6 +58,18 @@ public class AccountUpdateDto {
     }
 
     public void setAvatar(String avatar) {
-        this.avatar = avatar;
+        try {
+            this.avatar = Common.convertToBase64(avatar);
+        } catch (IOException e) {
+            this.avatar = avatar;
+        }
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
