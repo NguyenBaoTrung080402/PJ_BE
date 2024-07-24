@@ -1,7 +1,9 @@
 package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
+import com.DSTA.PJ_BE.Security.CustomUserDetails;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountCurrentDto;
 import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
@@ -27,6 +29,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -335,6 +339,23 @@ public class AccountServiceImp implements AccountService {
             accountRepository.save(account);
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.UPDATE_SUCCESS);
+            return res;
+        } catch (Exception ex) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
+
+    @Override
+    public DataResponse getCurrentAccountLogin() {
+        log.debug("Request Get Current Account Login");
+        DataResponse res = new DataResponse();
+        try {
+            Account account = accountRepository.getAccountUserName(Common.getCurrentUserLogin().getEmail());
+            AccountUpdateDto getAccount = mapper.map(account, AccountUpdateDto.class);
+            res.setStatus(Constants.SUCCESS);
+            res.setResult(getAccount);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);

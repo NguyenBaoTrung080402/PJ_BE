@@ -96,7 +96,7 @@ public class Constants {
 
 	public static final String VERIFY_OTP_SUCCESS = "Xác thực mã OTP thành công";
 
-	public static final String AVATAR_SAVE = "./assets/avatar/";
+	public static final String AVATAR_SAVE = "./src/main/resources/static/avatar/";
 	public static final String DELETE_SUCCESS = "Xoá Thành Công!";
 	public static final String ADD_CATEGORIES_SUCCESS = "Thêm Categories thành công!";
 	public static final String ERROR_ADD_NEW_CATEGORIES = "Lỗi khi thêm categories";

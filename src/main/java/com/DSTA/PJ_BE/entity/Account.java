@@ -115,11 +115,6 @@ public class Account {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-//        try {
-//            this.avatar = Common.convertToBase64(avatar);
-//        } catch (IOException e) {
-//            this.avatar = avatar;
-//        }
     }
     public Boolean getVerified() {
         return verified;
