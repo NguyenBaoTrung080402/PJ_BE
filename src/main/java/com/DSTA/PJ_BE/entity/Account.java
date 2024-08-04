@@ -1,9 +1,7 @@
 package com.DSTA.PJ_BE.entity;
 
-import com.DSTA.PJ_BE.utils.Common;
-
 import javax.persistence.*;
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -15,6 +13,7 @@ public class Account {
     private String name;
     @Column(name = "email", columnDefinition = "VARCHAR(100)", nullable = false, unique = true)
     private String email;
+    @JsonIgnore
     @Column(name = "password", columnDefinition = "VARCHAR(200)", nullable = false)
     private String password;
     @Column(name = "address", columnDefinition = "VARCHAR(50)", nullable = true)

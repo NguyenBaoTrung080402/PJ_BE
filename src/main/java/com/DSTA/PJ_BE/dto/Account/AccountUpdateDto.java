@@ -12,6 +12,7 @@ public class AccountUpdateDto {
     private String address;
     private String email;
     private String avatar;
+    private String authority;
 
     public String getName() {
         return name;
@@ -71,5 +72,13 @@ public class AccountUpdateDto {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+    
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

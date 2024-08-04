@@ -28,13 +28,20 @@ public class CustomUserDetails implements UserDetails {
 		this.account = account;
 	}
 
+	// @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    //     List<GrantedAuthority> authorities = new ArrayList<>();
+    //     List<String> roles = Common.convertStringToListObject(account.getAuthority());
+    //     for(String role : roles) {
+    //         authorities.add(new SimpleGrantedAuthority(role));
+    //     }
+    //     return authorities;
+    // }
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		List<String> roles = Common.convertStringToListObject(account.getAuthority());
-		for(String role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role));
-		}
+		String role = account.getAuthority();
+		authorities.add(new SimpleGrantedAuthority(role));
 		return authorities;
 	}
 

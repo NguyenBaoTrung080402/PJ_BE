@@ -1,9 +1,5 @@
 package com.DSTA.PJ_BE.dto.Order;
 
-import java.io.IOException;
-
-import com.DSTA.PJ_BE.utils.Common;
-
 public class OderViewDto {
     private Long id;
     private String productName;

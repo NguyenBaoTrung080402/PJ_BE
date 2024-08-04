@@ -20,8 +20,6 @@ public class BrandServiceImp implements BrandsService {
     @Autowired
     private BrandRepository brandRepository;
 
-    @Autowired
-    private ModelMapper mapper;
     @Override
     public DataResponse createBrand(Brand brands) {
         log.debug("Request Create Brands");
