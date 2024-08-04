@@ -1,9 +1,7 @@
 package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
-import com.DSTA.PJ_BE.Security.CustomUserDetails;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
-import com.DSTA.PJ_BE.dto.Account.AccountCurrentDto;
 import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
@@ -29,8 +27,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
@@ -99,7 +95,7 @@ public class AccountServiceImp implements AccountService {
                 return res;
             }
 
-            account.setAuthority(getRoleJson(Authorities.CUSTOMER));
+            account.setAuthority((Authorities.CUSTOMER));
             String password = account.getPassword();
             account.setPassword(passwordEncoder.encode(password));
 
