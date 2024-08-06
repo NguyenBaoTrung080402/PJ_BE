@@ -1,6 +1,7 @@
 package com.DSTA.PJ_BE.service;
 
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountForgotPasswordDto;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.otp.OtpDTO;
 import com.DSTA.PJ_BE.entity.Account;
@@ -30,4 +31,8 @@ public interface AccountService {
     DataResponse changePass(AccountChangePassDto accountChangePassDto);
 
     DataResponse updateAdmin(Long id);
+
+    DataResponse forgotPassword(String email);
+
+    DataResponse verifyOtpForgotPassword(OtpDTO forgotPass);
 }

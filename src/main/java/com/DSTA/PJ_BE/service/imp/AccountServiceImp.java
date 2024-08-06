@@ -2,6 +2,7 @@ package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountForgotPasswordDto;
 import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
@@ -129,29 +130,36 @@ public class AccountServiceImp implements AccountService {
 
     private DataResponse verifyOtp(OtpDTO optVerify) {
         DataResponse res = new DataResponse();
-        Optional<Otp> latestOtp = otpRepository.findByEmail(optVerify.getEmail());
+        try {
+            Optional<Otp> latestOtp = otpRepository.findByEmail(optVerify.getEmail());
     
-        if (latestOtp.isEmpty()) {
+            if (latestOtp.isEmpty()) {
+                res.setStatus(Constants.ERROR);
+                res.setMessage("OTP has expired");
+                otpRepository.deleteByEmail(optVerify.getEmail());
+                return res;
+            }
+        
+            Otp storedOtp = latestOtp.get();
+            LocalDateTime now = LocalDateTime.now();
+            if (storedOtp != null && storedOtp.getOtp().equals(optVerify.getOtp())) {
+                if (now.isBefore(storedOtp.getCreateTime().plusMinutes(3))) {
+                    res.setStatus(Constants.SUCCESS);
+                    otpRepository.deleteByEmail(optVerify.getEmail());
+                    res.setMessage("OTP verified successfully");
+                }
+            } else {
+                res.setStatus(Constants.ERROR);
+                res.setMessage("Invalid OTP");
+                otpRepository.deleteByEmail(optVerify.getEmail());
+            }
+
+            return res;
+        } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
-            res.setMessage("OTP has expired");
-            otpRepository.deleteByEmail(optVerify.getEmail());
+            res.setMessage(Constants.SYSTEM_ERROR);
             return res;
         }
-    
-        Otp storedOtp = latestOtp.get();
-        LocalDateTime now = LocalDateTime.now();
-        if (storedOtp != null && storedOtp.getOtp().equals(optVerify.getOtp())) {
-            if (now.isBefore(storedOtp.getCreateTime().plusMinutes(3))) {
-                res.setStatus(Constants.SUCCESS);
-                otpRepository.deleteByEmail(optVerify.getEmail());
-                res.setMessage("OTP verified successfully");
-            }
-        } else {
-            res.setStatus(Constants.ERROR);
-            res.setMessage("Invalid OTP");
-            otpRepository.deleteByEmail(optVerify.getEmail());
-        }
-        return res;
     }
 
     @Override
@@ -360,4 +368,45 @@ public class AccountServiceImp implements AccountService {
         }
     }
 
+    @Override
+    public DataResponse forgotPassword(String email) {
+        log.debug("Request Get Email Forgot Password");
+        DataResponse res = new DataResponse();
+        try {
+            Account account = accountRepository.getAccountUserName(email);
+            if(account == null){
+                res.setStatus(Constants.NOT_FOUND);
+                res.setMessage(Constants.ACCOUNT_NOT_FOUND);
+                return res;
+            }
+
+            String otp = otpService.create(account.getEmail());
+            mailService.sendMailOtp(new AccountOtpSendMail(account.getEmail(), account.getName(), otp));
+            
+            res.setStatus(Constants.SUCCESS);
+            return res;
+        } catch (Exception ex) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
+
+    @Override
+    public DataResponse verifyOtpForgotPassword(OtpDTO forgotPass) {
+        DataResponse res = new DataResponse();
+        try {
+            // Xác minh OTP
+            DataResponse otpVerification = verifyOtp(forgotPass);
+            if (otpVerification.getStatus().equals(Constants.ERROR)) {
+                return otpVerification;
+            }
+            res.setStatus(Constants.SUCCESS);
+            return res;
+        } catch (Exception ex) {
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
 }

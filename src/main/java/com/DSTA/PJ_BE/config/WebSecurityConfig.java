@@ -81,6 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/public/**").permitAll()
         .antMatchers("/api/account/login", "/api/account/oauth2/code/google").permitAll()
 		.antMatchers("/api/account/register").permitAll()
+		.antMatchers("/api/account/forget-password").permitAll()
+		.antMatchers("/api/account/verify-otp-forgot-password/**").permitAll()
 		.antMatchers("/api/account/verify-otp/**").permitAll()
 		.antMatchers("/api/product/get-product-id/{id}").permitAll()
 		.antMatchers("/api/categories/get-all-category").permitAll()

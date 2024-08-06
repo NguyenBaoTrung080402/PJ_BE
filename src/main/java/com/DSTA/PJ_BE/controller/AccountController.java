@@ -4,6 +4,7 @@ import com.DSTA.PJ_BE.Security.CustomUserDetails;
 import com.DSTA.PJ_BE.Security.JwtTokenProvider;
 import com.DSTA.PJ_BE.Security.LoginResponse;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
+import com.DSTA.PJ_BE.dto.Account.AccountForgotPasswordDto;
 import com.DSTA.PJ_BE.dto.Account.AccountLoginDto;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.otp.OtpDTO;
@@ -121,6 +122,20 @@ public class AccountController {
     public DataResponse updateAdmin(@PathVariable("id") Long id){
         log.debug("Controller Update Admin");
         DataResponse res = accountService.updateAdmin(id);
+        return res;
+    }
+
+    @PostMapping("/forget-password")
+    public DataResponse forgetPassword(@RequestBody OtpDTO forgotPass){
+        log.debug("Controller Update Admin");
+        DataResponse res = accountService.forgotPassword(forgotPass.getEmail());
+        return res;
+    }
+
+    @PostMapping("/verify-otp-forgot-password")
+    public DataResponse verifyOtpForgotPassword(@RequestBody OtpDTO forgotPass){
+        log.debug("Controller Update Admin");
+        DataResponse res = accountService.verifyOtpForgotPassword(forgotPass);
         return res;
     }
 }
