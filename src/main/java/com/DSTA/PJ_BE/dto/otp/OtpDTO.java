@@ -4,6 +4,10 @@ public class OtpDTO {
     private String otp;
 	
 	private String email;
+
+	private String newPassword;
+
+    private String rePassword;
 	
 	public OtpDTO() {
 	}
@@ -29,4 +33,17 @@ public class OtpDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getNewPassword() {
+        return newPassword;
+    }
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+    public String getRePassword() {
+        return rePassword;
+    }
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
 }
