@@ -34,6 +34,12 @@ public class Product {
     private Long brandsId;
     @Column(name = "status", columnDefinition = "VARCHAR(20)", nullable = false)
     private String status;
+    @Column(name = "reviews_count", columnDefinition = "BIGINT")
+    private BigDecimal reviewCount;
+    @Column(name = "total_sales", columnDefinition = "BIGINT")
+    private BigDecimal totalSales;
+    @Column(name = "average_rating", precision = 3, scale = 2)
+    private BigDecimal averageRating;
 
     public Long getId() {
         return id;
