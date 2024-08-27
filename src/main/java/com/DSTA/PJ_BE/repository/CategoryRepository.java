@@ -6,14 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Categories, Long> {
 
     @Query(value = "SELECT ca.id as id, ca.slug as slugCategory, ca.name_category as nameCategory, ca.image_category as imgCategory FROM categories ca", nativeQuery = true)
-    List<CategoriesViewAllDtoInf> getALlCate();
+    Page<CategoriesViewAllDtoInf> getALlCate(Pageable pageable);
 
     @Query(value = "SELECT ca FROM Categories ca WHERE ca.id = :id")
     Categories getCategoryByID(@Param("id") Long id);

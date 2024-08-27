@@ -14,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,17 +68,17 @@ public class CategoriesServiceImp implements CategoriesService {
     }
 
     @Override
-    public DataResponse getAllCategories() {
+    public DataResponse getAllCategories(Pageable pageable) {
         log.debug("Requtest Get All Categories");
         DataResponse res = new DataResponse();
         try {
-            List<CategoriesViewAllDtoInf> listCate = categoryRepository.getALlCate();
+            Page<CategoriesViewAllDtoInf> listCate = categoryRepository.getALlCate(pageable);
             if(listCate == null || listCate.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.CATEGORIES_NOT_FOUND);
                 return res;
             }
-            List<CategoriesGetAllDto> cateList = Common.mapList(listCate, CategoriesGetAllDto.class);
+            Page<CategoriesGetAllDto> cateList = Common.mapPage(listCate, CategoriesGetAllDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(cateList);
             return res;
