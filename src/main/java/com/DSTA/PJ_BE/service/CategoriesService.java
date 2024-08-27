@@ -1,13 +1,15 @@
 package com.DSTA.PJ_BE.service;
 
 import com.DSTA.PJ_BE.utils.DataResponse;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface CategoriesService {
 
     DataResponse addNewCategories(MultipartFile file, String str);
 
-    DataResponse getAllCategories();
+    DataResponse getAllCategories(Pageable pageable);
 
     DataResponse deleteCategories(Long id);
 
