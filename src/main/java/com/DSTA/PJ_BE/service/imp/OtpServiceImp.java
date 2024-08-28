@@ -1,21 +1,14 @@
 package com.DSTA.PJ_BE.service.imp;
 
-import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.otp.OtpDTO;
-import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.entity.Otp;
-import com.DSTA.PJ_BE.repository.AccountRepository;
 import com.DSTA.PJ_BE.repository.OtpRepository;
-import com.DSTA.PJ_BE.service.MailService;
 import com.DSTA.PJ_BE.service.OtpService;
-import com.DSTA.PJ_BE.utils.Characters;
-import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -37,11 +30,6 @@ public class OtpServiceImp implements OtpService{
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private AccountRepository accountRepository;
-
-	@Autowired
-	private MailService mailService;
 
     @Override
 	public String create(String email) {

@@ -1,7 +1,6 @@
 package com.DSTA.PJ_BE.Security;
 
 import com.DSTA.PJ_BE.entity.Account;
-import com.DSTA.PJ_BE.utils.Common;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

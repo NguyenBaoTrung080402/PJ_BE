@@ -4,7 +4,6 @@ import com.DSTA.PJ_BE.Security.CustomUserDetails;
 import com.DSTA.PJ_BE.Security.JwtTokenProvider;
 import com.DSTA.PJ_BE.Security.LoginResponse;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
-import com.DSTA.PJ_BE.dto.Account.AccountForgotPasswordDto;
 import com.DSTA.PJ_BE.dto.Account.AccountLoginDto;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;
 import com.DSTA.PJ_BE.dto.otp.OtpDTO;

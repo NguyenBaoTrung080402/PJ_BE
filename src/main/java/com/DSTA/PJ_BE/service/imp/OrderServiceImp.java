@@ -5,7 +5,6 @@ import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.entity.Order;
 import com.DSTA.PJ_BE.entity.WishList;
 import com.DSTA.PJ_BE.repository.OrderRepository;
-import com.DSTA.PJ_BE.repository.ProductRepository;
 import com.DSTA.PJ_BE.repository.WishListRepository;
 import com.DSTA.PJ_BE.service.OrderService;
 import com.DSTA.PJ_BE.utils.Common;
@@ -27,9 +26,6 @@ public class OrderServiceImp implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     @Autowired
     private WishListRepository wishListRepository;
