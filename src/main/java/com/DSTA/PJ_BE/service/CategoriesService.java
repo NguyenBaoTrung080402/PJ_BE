@@ -14,4 +14,6 @@ public interface CategoriesService {
     DataResponse deleteCategories(Long id);
 
     DataResponse updateCategory(MultipartFile file, String str, Long id);
+
+    DataResponse getCategoryDetail(Long id);
 }

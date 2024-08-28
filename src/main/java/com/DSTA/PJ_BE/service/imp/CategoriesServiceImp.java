@@ -151,4 +151,25 @@ public class CategoriesServiceImp implements CategoriesService {
         }
     }
 
+    @Override
+    public DataResponse getCategoryDetail(Long id) {
+        log.debug("Request Get Category Detail");
+        DataResponse res = new DataResponse();
+        try {
+            Categories categories = categoryRepository.getCategoryByID(id);
+            if(categories == null){
+                res.setStatus(Constants.NOT_FOUND);
+                res.setMessage(Constants.CATEGORIES_NOT_FOUND);
+                return res;
+            }
+            // CategoriesGetAllDto categoriesGetAllDto = mapper.map(categories, CategoriesGetAllDto.class);
+            res.setStatus(Constants.SUCCESS);
+            res.setResult(categories);
+            return res;
+        }catch (Exception ex){
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
 }
