@@ -1,6 +1,5 @@
 package com.DSTA.PJ_BE.config;
 
-import com.DSTA.PJ_BE.Security.CustomOAuth2UserService;
 import com.DSTA.PJ_BE.Security.JwtAuthenticationFilter;
 import com.DSTA.PJ_BE.Security.JwtConfigurer;
 import com.DSTA.PJ_BE.Security.JwtTokenProvider;
