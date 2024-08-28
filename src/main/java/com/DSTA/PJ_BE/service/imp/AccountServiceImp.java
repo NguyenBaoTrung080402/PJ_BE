@@ -2,7 +2,6 @@ package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.Security.Authorities;
 import com.DSTA.PJ_BE.dto.Account.AccountChangePassDto;
-import com.DSTA.PJ_BE.dto.Account.AccountForgotPasswordDto;
 import com.DSTA.PJ_BE.dto.Account.AccountInforSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountOtpSendMail;
 import com.DSTA.PJ_BE.dto.Account.AccountRegisterDto;

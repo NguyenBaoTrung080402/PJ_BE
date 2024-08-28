@@ -5,7 +5,6 @@ import com.DSTA.PJ_BE.repository.BrandRepository;
 import com.DSTA.PJ_BE.service.BrandsService;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

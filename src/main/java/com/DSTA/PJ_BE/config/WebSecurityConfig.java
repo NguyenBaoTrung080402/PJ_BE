@@ -41,8 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 
-	@Autowired
-    private CustomOAuth2UserService oauthUserService;
 	
 	@Bean
 	public JwtAuthenticationFilter jwtAuthenticationFilter() {

@@ -1,11 +1,9 @@
 package com.DSTA.PJ_BE.utils;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validate {
-    private static final Scanner sc = new Scanner(System.in);
     private static Matcher matcher;
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
     private static final String TEL_REGEX = "^0([3|5|7|8|9])([0-9]){8}$";
