@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/api/categories")
@@ -54,4 +56,12 @@ public class CategoryController {
         DataResponse res = categoriesService.updateCategory(file, str, id);
         return res;
     }
+
+    @GetMapping("/get-category-detail/{id}")
+    public DataResponse getCategoryDetail(@PathVariable("id") Long id) {
+        log.debug("Controller Request Get Category Detail");
+        DataResponse res = categoriesService.getCategoryDetail(id);
+        return res;
+    }
+    
 }
