@@ -1,8 +1,10 @@
 package com.DSTA.PJ_BE.service.imp;
 
+// import com.DSTA.PJ_BE.config.ModelMapperConfig;
 import com.DSTA.PJ_BE.dto.Categories.CategoriesADto;
 import com.DSTA.PJ_BE.dto.Categories.CategoriesGetAllDto;
 import com.DSTA.PJ_BE.dto.Categories.CategoriesViewAllDtoInf;
+import com.DSTA.PJ_BE.dto.Categories.CategoriesViewDetailsDtoInf;
 import com.DSTA.PJ_BE.entity.Account;
 import com.DSTA.PJ_BE.entity.Categories;
 import com.DSTA.PJ_BE.repository.CategoryRepository;
@@ -156,15 +158,15 @@ public class CategoriesServiceImp implements CategoriesService {
         log.debug("Request Get Category Detail");
         DataResponse res = new DataResponse();
         try {
-            Categories categories = categoryRepository.getCategoryByID(id);
+            CategoriesViewDetailsDtoInf categories = categoryRepository.getCategoryByIDByADmin(id);
             if(categories == null){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.CATEGORIES_NOT_FOUND);
                 return res;
             }
-            // CategoriesGetAllDto categoriesGetAllDto = mapper.map(categories, CategoriesGetAllDto.class);
+            CategoriesADto categoriesGetAllDto = mapper.map(categories, CategoriesADto.class);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(categories);
+            res.setResult(categoriesGetAllDto);
             return res;
         }catch (Exception ex){
             res.setStatus(Constants.ERROR);
