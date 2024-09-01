@@ -1,10 +1,13 @@
 package com.DSTA.PJ_BE.entity;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
-public class Comments {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +29,19 @@ public class Comments {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "is_approved", nullable = false)
+    @Column(name = "is_approved", columnDefinition = "BIT DEFAULT 0", nullable = false)
     private boolean isApproved;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PostUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+
 }

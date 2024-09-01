@@ -30,7 +30,7 @@ public class Review {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "is_verified_purchase", nullable = false)
+    @Column(name = "is_verified_purchase", columnDefinition = "BIT DEFAULT 0", nullable = false)
     private boolean isVerifiedPurchase;
 
     @Column(name = "helpful_votes")
@@ -39,5 +39,15 @@ public class Review {
     @Column(name = "image_urls")
     private String imageUrls;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PostUpdate
+    protected void onUpdate(){
+        updatedAt = LocalDateTime.now();
+    }
 
 }
