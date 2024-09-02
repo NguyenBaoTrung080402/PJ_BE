@@ -108,4 +108,6 @@ public class Constants {
 	public static final String ADD_SUCCESS = "Thêm Mới Thành Công!";
 	public static final String LIST_NOT_FOUND = "Danh Sách Rỗng!";
 	public static final String ERROR_ADD_NEW_PRODUCT = "Lỗi khi thêm mới product";
+
+	public static final String ERROR_GET_BLOG = "Lỗi khi lấy blog";
 }
