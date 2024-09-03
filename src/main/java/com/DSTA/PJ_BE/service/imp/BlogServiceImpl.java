@@ -1,7 +1,6 @@
 package com.DSTA.PJ_BE.service.imp;
 
 import com.DSTA.PJ_BE.entity.Blog;
-import com.DSTA.PJ_BE.entity.BlogTopic;
 import com.DSTA.PJ_BE.repository.BlogRepository;
 import com.DSTA.PJ_BE.service.BlogService;
 import com.DSTA.PJ_BE.utils.Constants;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class BlogServiceImpl implements BlogService {
