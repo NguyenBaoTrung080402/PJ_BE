@@ -18,8 +18,8 @@ import com.DSTA.PJ_BE.utils.Common;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import com.DSTA.PJ_BE.utils.Validate;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.core.JsonProcessingException;
+// import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+// import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -191,14 +191,14 @@ public class AccountServiceImp implements AccountService {
         return res;
     }
 
-    private String getRoleJson(String role) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(Collections.singletonList("" + role));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error converting roles to JSON", e);
-        }
-    }
+    // private String getRoleJson(String role) {
+    //     ObjectMapper objectMapper = new ObjectMapper();
+    //     try {
+    //         return objectMapper.writeValueAsString(Collections.singletonList("" + role));
+    //     } catch (JsonProcessingException e) {
+    //         throw new RuntimeException("Error converting roles to JSON", e);
+    //     }
+    // }
     @Override
     @Transactional
     public DataResponse updateAccount(String str, MultipartFile file) {
