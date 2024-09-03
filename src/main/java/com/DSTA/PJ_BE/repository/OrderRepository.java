@@ -23,8 +23,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT od.id AS id, p.name_product AS productName, od.price AS total, od.status AS status, od.quantity AS quantity, od.tel AS tel, od.address AS address, us.name AS userName " +
             " FROM orders od " +
-            " JOIN product p ON od.product_id = p.id " +
-            " JOIN user us ON od.user_id = us.id ", nativeQuery = true)
+            "LEFT JOIN product p ON od.product_id = p.id " +
+            "LEFT JOIN user us ON od.user_id = us.id ", nativeQuery = true)
     Page<OrderViewInfDto> getAllOrderInf(Pageable pageable);
 
     @Query(value = "SELECT od.id AS id, p.name_product AS productName, od.price AS total, od.status AS status, od.quantity AS quantity, od.tel AS tel, od.address AS address, us.name AS userName, p.image AS image " +

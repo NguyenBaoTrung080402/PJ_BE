@@ -334,10 +334,10 @@ public class AccountServiceImp implements AccountService {
                 res.setMessage(Constants.ACCOUNT_NOT_FOUND);
                 return res;
             }
-            if(account.getAuthority().equals(getRoleJson(Authorities.CUSTOMER))){
-                account.setAuthority(getRoleJson(Authorities.ADMIN));
+            if(account.getAuthority().equals(Authorities.CUSTOMER)){
+                account.setAuthority(Authorities.ADMIN);
             }else{
-                account.setAuthority(getRoleJson(Authorities.CUSTOMER));
+                account.setAuthority(Authorities.CUSTOMER);
             }
             accountRepository.save(account);
             res.setStatus(Constants.SUCCESS);
