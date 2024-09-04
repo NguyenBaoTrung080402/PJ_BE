@@ -1,8 +1,6 @@
 package com.DSTA.PJ_BE.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity

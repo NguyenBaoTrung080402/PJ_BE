@@ -87,6 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/api/account/sendMail/{email}").permitAll()
 		.antMatchers("/api/account/verifyOtp/{otp}").permitAll()
 		.antMatchers("/api/account/createNewPass/{newPass}").permitAll()
+		.antMatchers("/api/blog/**").permitAll()
         .anyRequest().authenticated()
         .and()
 		.logout()

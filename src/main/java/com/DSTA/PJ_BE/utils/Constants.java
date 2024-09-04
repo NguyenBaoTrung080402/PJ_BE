@@ -109,6 +109,8 @@ public class Constants {
 	public static final String LIST_NOT_FOUND = "Danh Sách Rỗng!";
 	public static final String ERROR_ADD_NEW_PRODUCT = "Lỗi khi thêm mới product";
 
+	public static final String ERROR_GET_BLOG = "Lỗi khi lấy blog";
+
 	public static final String NOT_FOUND_ORDER = "Không tìm thấy đơn hàng";
 	public static final String ERROR_ORDER_STATUS = "Trạng thái không hợp lệ";
 

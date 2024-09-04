@@ -20,8 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     "p.discounted_price as discountedPrice, p.status as status, c.name_category AS categoriesName, " +
     "b.name_brand AS brandsName " +
     "FROM product p " +
-    "JOIN categories c ON p.categories_id = c.id " +
-    "JOIN brand b ON p.brands_id = b.id " +
+    "LEFT JOIN categories c ON p.categories_id = c.id " +
+    "LEFT JOIN brand b ON p.brands_id = b.id " +
     "ORDER BY p.id ASC ", nativeQuery = true
     )
     Page<ProductGetAllInfDto> getAllProductInf(Pageable pageable);
