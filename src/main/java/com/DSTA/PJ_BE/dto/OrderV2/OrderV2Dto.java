@@ -20,4 +20,5 @@ public class OrderV2Dto implements Serializable {
     String status;
     String paymentMethod;
 
+
 }
