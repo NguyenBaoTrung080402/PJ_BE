@@ -19,7 +19,7 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
-    private final Logger log = LoggerFactory.getLogger(BrandServiceImp.class);
+    private final Logger log = LoggerFactory.getLogger(BlogServiceImpl.class);
 
     @Override
     public DataResponse getBlogById(Long id) {
