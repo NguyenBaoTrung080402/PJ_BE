@@ -1,8 +1,8 @@
 package com.DSTA.PJ_BE.service.imp;
 
-import com.DSTA.PJ_BE.entity.Brand;
-import com.DSTA.PJ_BE.repository.BrandRepository;
-import com.DSTA.PJ_BE.service.BrandsService;
+import com.DSTA.PJ_BE.entity.Category;
+import com.DSTA.PJ_BE.repository.CategoryRepository;
+import com.DSTA.PJ_BE.service.CategoryService;
 import com.DSTA.PJ_BE.utils.Constants;
 import com.DSTA.PJ_BE.utils.DataResponse;
 import org.slf4j.Logger;
@@ -13,30 +13,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BrandServiceImp implements BrandsService {
-    private final Logger log = LoggerFactory.getLogger(BrandServiceImp.class);
+public class CategoryServiceImp implements CategoryService {
+    private final Logger log = LoggerFactory.getLogger(CategoryServiceImp.class);
 
     @Autowired
-    private BrandRepository brandRepository;
+    private CategoryRepository brandRepository;
 
     @Override
-    public DataResponse createBrand(Brand brands) {
+    public DataResponse createCategory(Category category) {
         log.debug("Request Create Brands");
         DataResponse res = new DataResponse();
         try {
-            if(brands.getNameBrand().length()<5 || brands.getSlugBrand().length()<5){
+            if(category.getNameCategory().length()<5 || category.getSlugCategory().length()<5){
                 res.setStatus(Constants.ERROR);
                 res.setMessage(Constants.ERROR_ADD_NEW_BRANDS);
                 return res;
             }
-            brands.setNameBrand(brands.getNameBrand());
-            brands.setSlugBrand(brands.getSlugBrand());
-            brands.setStatus(brands.getStatus());
-            brandRepository.save(brands);
+            category.setNameCategory(category.getNameCategory());
+            category.setSlugCategory(category.getSlugCategory());
+            category.setStatus(category.getStatus());
+            brandRepository.save(category);
 
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.ADD_SUCCESS);
-            res.setResult(brands);
+            res.setResult(category);
             return res;
         }catch (Exception ex){
             res.setStatus(Constants.ERROR);
@@ -47,11 +47,11 @@ public class BrandServiceImp implements BrandsService {
     }
 
     @Override
-    public DataResponse getAllBrands() {
+    public DataResponse getAllCategories() {
         log.debug("Request Get All Brands");
         DataResponse res = new DataResponse();
         try {
-            List<Brand> listBrand = brandRepository.getAllBrand();
+            List<Category> listBrand = brandRepository.getAllBrand();
             if(listBrand == null || listBrand.isEmpty()){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
@@ -70,19 +70,19 @@ public class BrandServiceImp implements BrandsService {
     }
 
     @Override
-    public DataResponse updateBrand(Long id, Brand brand) {
+    public DataResponse updateCategory(Long id, Category category) {
         log.debug("Request update Brands");
         DataResponse res = new DataResponse();
         try {
-            Brand brandUpdate = brandRepository.getBrandById(id);
-            if(brand == null){
+            Category brandUpdate = brandRepository.getBrandById(id);
+            if(category == null){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
                 return res;
             }
-            brandUpdate.setNameBrand(brand.getNameBrand());
-            brandUpdate.setSlugBrand(brand.getSlugBrand());
-            brandUpdate.setStatus(brand.getStatus());
+            brandUpdate.setNameCategory(category.getNameCategory());
+            brandUpdate.setSlugCategory(category.getSlugCategory());
+            brandUpdate.setStatus(category.getStatus());
             brandRepository.save(brandUpdate);
 
             res.setStatus(Constants.SUCCESS);
@@ -97,11 +97,11 @@ public class BrandServiceImp implements BrandsService {
     }
 
     @Override
-    public DataResponse deleteBrand(Long id) {
+    public DataResponse deleteCategory(Long id) {
         log.debug("Request Delete Brands");
         DataResponse res = new DataResponse();
         try {
-            Brand brand = brandRepository.getBrandById(id);
+            Category brand = brandRepository.getBrandById(id);
             if(brand == null){
                 res.setStatus(Constants.NOT_FOUND);
                 res.setMessage(Constants.LIST_NOT_FOUND);
