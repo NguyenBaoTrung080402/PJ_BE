@@ -14,11 +14,15 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
 
-    @Query(value = "SELECT ca.id as id, ca.slug as slugCategory, ca.name_category as nameCategory, ca.image_category as imgCategory FROM categories ca ORDER BY ca.id DESC", nativeQuery = true)
-    Page<CollectionsViewAllDtoInf> getALlCate(Pageable pageable);
+    @Query(value = "SELECT co.id as id, co.slug as slugCollection, co.name_collection as nameCollection, co.image_collection as imgCollection, co.description as description, co.is_active as isActive, ca.name_category as categoryName, p.name_product as ProductName " +
+    "FROM collection co "+
+    "LEFT JOIN category ca ON co.category_id = ca.id "+ 
+    "LEFT JOIN product p ON co.product_id = p.id "+ 
+    "ORDER BY ca.id DESC", nativeQuery = true)
+    Page<CollectionsViewAllDtoInf> getALlCollec(Pageable pageable);
 
-    @Query(value = "SELECT ca FROM Collection ca WHERE ca.id = :id")
-    Collection getCategoryByID(@Param("id") Long id);
+    @Query(value = "SELECT co FROM Collection co WHERE co.id = :id")
+    Collection getCollectionByID(@Param("id") Long id);
 
     @Query(value = "SELECT ca.slug as slug, ca.name_category as name, ca.image_category as imageCategory FROM categories ca WHERE ca.id = :id", nativeQuery = true)
     CollectionsViewDetailsDtoInf getCategoryByIDByADmin(@Param("id") Long id);

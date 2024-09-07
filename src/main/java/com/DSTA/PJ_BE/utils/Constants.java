@@ -98,11 +98,11 @@ public class Constants {
 
 	public static final String AVATAR_SAVE = "./src/main/resources/static/avatar/";
 	public static final String DELETE_SUCCESS = "Xoá Thành Công!";
-	public static final String ADD_CATEGORIES_SUCCESS = "Thêm Categories thành công!";
-	public static final String ERROR_ADD_NEW_CATEGORIES = "Lỗi khi thêm categories";
-	public static final String IMG_CATEGORY_SAVE = "./src/main/resources/static/categories/";
+	public static final String ADD_COLLECTION_SUCCESS = "Thêm Collection thành công!";
+	public static final String ERROR_ADD_NEW_COLLECTIONS = "Lỗi khi thêm collections";
+	public static final String IMG_COLLECTION_SAVE = "./src/main/resources/static/categories/";
 	public static final String IMG_PRODUCT_SAVE = "./src/main/resources/static/product/";
-	public static final String CATEGORIES_NOT_FOUND = "Danh Sách Category rỗng";
+	public static final String COLLECTION_NOT_FOUND = "Danh Sách Collection rỗng";
 	public static final String UPDATE_SUCCESS = "Cập nhập thành công!";
 	public static final String ERROR_ADD_NEW_BRANDS = "Lô Khi Thêm Mới Brands";
 	public static final String ADD_SUCCESS = "Thêm Mới Thành Công!";
