@@ -27,7 +27,7 @@ public class CollectionServiceImp implements CollectionService {
     private final Logger log = LoggerFactory.getLogger(CollectionServiceImp.class);
 
     @Autowired
-    private CollectionRepository categoryRepository;
+    private CollectionRepository collectionRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -45,10 +45,10 @@ public class CollectionServiceImp implements CollectionService {
 
             if (collectionADto.getName().length() < 5 || collectionADto.getSlug().length() < 5) {
                 res.setStatus(Constants.ERROR);
-                res.setMessage(Constants.ERROR_ADD_NEW_CATEGORIES);
+                res.setMessage(Constants.ERROR_ADD_NEW_COLLECTIONS);
                 return res;
             }
-            String imageUrl = Constants.IMG_CATEGORY_SAVE + account.getId() + "/" + Common.currentDate() + "/";
+            String imageUrl = Constants.IMG_COLLECTION_SAVE + account.getId() + "/" + Common.currentDate() + "/";
             String img = Common.saveFile(file, imageUrl, account.getId(), collection.getName());
             if (img != null) {
                 collection.setImageCollection(img);
@@ -59,9 +59,9 @@ public class CollectionServiceImp implements CollectionService {
             collection.setCategoryId(collectionADto.getCategoryId());
             collection.setProductIds(collectionADto.getProductId());
             collection.setActive(true);
-            categoryRepository.save(collection);
+            collectionRepository.save(collection);
             res.setStatus(Constants.SUCCESS);
-            res.setMessage(Constants.ADD_CATEGORIES_SUCCESS);
+            res.setMessage(Constants.ADD_COLLECTION_SUCCESS);
             res.setResult(collection);
             return res;
         } catch (Exception ex) {
@@ -73,18 +73,18 @@ public class CollectionServiceImp implements CollectionService {
 
     @Override
     public DataResponse getAllCollections(Pageable pageable) {
-        log.debug("Requtest Get All Categories");
+        log.debug("Requtest Get All Collection");
         DataResponse res = new DataResponse();
         try {
-            Page<CollectionsViewAllDtoInf> listCate = categoryRepository.getALlCate(pageable);
-            if (listCate == null || listCate.isEmpty()) {
+            Page<CollectionsViewAllDtoInf> listCollection = collectionRepository.getALlCollec(pageable);
+            if (listCollection == null || listCollection.isEmpty()) {
                 res.setStatus(Constants.NOT_FOUND);
-                res.setMessage(Constants.CATEGORIES_NOT_FOUND);
+                res.setMessage(Constants.COLLECTION_NOT_FOUND);
                 return res;
             }
-            Page<CollectionsGetAllDto> cateList = Common.mapPage(listCate, CollectionsGetAllDto.class);
+            Page<CollectionsGetAllDto> collection = Common.mapPage(listCollection, CollectionsGetAllDto.class);
             res.setStatus(Constants.SUCCESS);
-            res.setResult(cateList);
+            res.setResult(collection);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
@@ -95,18 +95,18 @@ public class CollectionServiceImp implements CollectionService {
 
     @Override
     public DataResponse deleteCollections(Long id) {
-        log.debug("Request Delete Categories");
+        log.debug("Request Delete Collection");
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            Collection categories = categoryRepository.getCategoryByID(id);
-            if (categories == null) {
+            Collection collections = collectionRepository.getCollectionByID(id);
+            if (collections == null) {
                 res.setStatus(Constants.NOT_FOUND);
-                res.setMessage(Constants.CATEGORIES_NOT_FOUND);
+                res.setMessage(Constants.COLLECTION_NOT_FOUND);
                 return res;
             }
-            String imgPath = Constants.IMG_CATEGORY_SAVE + account.getId();
-            categoryRepository.delete(categories);
+            String imgPath = Constants.IMG_COLLECTION_SAVE + account.getId();
+            collectionRepository.delete(collections);
             Common.deleteImageFolder(imgPath);
 
             res.setStatus(Constants.SUCCESS);
@@ -121,33 +121,38 @@ public class CollectionServiceImp implements CollectionService {
 
     @Override
     public DataResponse updateCollections(MultipartFile file, String str, Long id) {
-        log.debug("Request Update Categories");
+        log.debug("Request Update Collection");
         DataResponse res = new DataResponse();
         Account account = Common.getCurrentUserLogin();
         try {
-            CollectionsAddDto categoriesADto = Common.convertStringToObject(str, CollectionsAddDto.class);
-            Collection categories = categoryRepository.getCategoryByID(id);
-            if (categoriesADto.getName().length() < 5 || categoriesADto.getSlug().length() < 5) {
+            CollectionsAddDto collectionAddDto = Common.convertStringToObject(str, CollectionsAddDto.class);
+            Collection collections = collectionRepository.getCollectionByID(id);
+            if (collectionAddDto.getName().length() < 5 || collectionAddDto.getSlug().length() < 5) {
                 res.setStatus(Constants.ERROR);
-                res.setMessage(Constants.ERROR_ADD_NEW_CATEGORIES);
+                res.setMessage(Constants.ERROR_ADD_NEW_COLLECTIONS);
                 return res;
             }
             if (file != null && !file.isEmpty()) {
-                String imageUrl = Constants.IMG_CATEGORY_SAVE + account.getId() + "/" + Common.currentDate() + "/";
-                String img = Common.saveFile(file, imageUrl, categories.getId(), categories.getName());
+                String imageUrl = Constants.IMG_COLLECTION_SAVE + account.getId() + "/" + Common.currentDate() + "/";
+                String img = Common.saveFile(file, imageUrl, collections.getId(), collections.getName());
                 if (img != null) {
-                    categories.setImageCollection(img);
+                    collections.setImageCollection(img);
                 }
             } else {
-                categories.setImageCollection(categories.getImageCollection());
+                collections.setImageCollection(collections.getImageCollection());
             }
-            categories.setSlug(categoriesADto.getSlug());
-            categories.setName(categoriesADto.getName());
-            categoryRepository.save(categories);
+            
+            collections.setName(collectionAddDto.getName());
+            collections.setSlug(collectionAddDto.getSlug());
+            collections.setDescription(collectionAddDto.getDescription());
+            collections.setCategoryId(collectionAddDto.getCategoryId());
+            collections.setProductIds(collectionAddDto.getProductId());
+            collections.setActive(true);
+            collectionRepository.save(collections);
 
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.UPDATE_SUCCESS);
-            res.setResult(categories);
+            res.setResult(collections);
             return res;
         } catch (Exception ex) {
             res.setStatus(Constants.ERROR);
@@ -161,13 +166,13 @@ public class CollectionServiceImp implements CollectionService {
         log.debug("Request Get Category Detail");
         DataResponse res = new DataResponse();
         try {
-            CollectionsViewDetailsDtoInf categories = categoryRepository.getCategoryByIDByADmin(id);
-            if (categories == null) {
+            CollectionsViewDetailsDtoInf collections = collectionRepository.getCategoryByIDByADmin(id);
+            if (collections == null) {
                 res.setStatus(Constants.NOT_FOUND);
-                res.setMessage(Constants.CATEGORIES_NOT_FOUND);
+                res.setMessage(Constants.COLLECTION_NOT_FOUND);
                 return res;
             }
-            CollectionsAddDto categoriesGetAllDto = mapper.map(categories, CollectionsAddDto.class);
+            CollectionsAddDto categoriesGetAllDto = mapper.map(collections, CollectionsAddDto.class);
             res.setStatus(Constants.SUCCESS);
             res.setResult(categoriesGetAllDto);
             return res;

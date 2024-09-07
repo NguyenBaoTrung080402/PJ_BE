@@ -9,6 +9,10 @@ public class CollectionsGetAllDto {
     private String nameCollection;
     private String slugCollection;
     private String imgCollection;
+    private String description;
+    private Boolean isActive;
+    private String categoryName;
+    private String ProductName;
 
     public String getId() {
         return id;
@@ -44,5 +48,29 @@ public class CollectionsGetAllDto {
         } catch (IOException e) {
             this.imgCollection = imgCollection;
         }
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    public String getCategoryName() {
+        return categoryName;
+    }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+    public String getProductName() {
+        return ProductName;
+    }
+    public void setProductName(String productName) {
+        ProductName = productName;
     }
 }

@@ -5,4 +5,8 @@ public interface CollectionsViewAllDtoInf {
     String getNameCollection();
     String getSlugCollection();
     String getImgCollection();
+    String getCategoryName();
+    String getDescription();
+    String getProductName();
+    Boolean getIsActive();
 }
