@@ -58,7 +58,7 @@ public class CollectionServiceImp implements CollectionService {
             collection.setDescription(collectionADto.getDescription());
             collection.setCategoryId(collectionADto.getCategoryId());
             collection.setProductIds(collectionADto.getProductId());
-            collection.setActive(true);
+            collection.setActive(Boolean.parseBoolean(collectionADto.getIsActive()));
             collectionRepository.save(collection);
             res.setStatus(Constants.SUCCESS);
             res.setMessage(Constants.ADD_COLLECTION_SUCCESS);
@@ -147,7 +147,7 @@ public class CollectionServiceImp implements CollectionService {
             collections.setDescription(collectionAddDto.getDescription());
             collections.setCategoryId(collectionAddDto.getCategoryId());
             collections.setProductIds(collectionAddDto.getProductId());
-            collections.setActive(true);
+            collections.setActive(Boolean.parseBoolean(collectionAddDto.getIsActive()));
             collectionRepository.save(collections);
 
             res.setStatus(Constants.SUCCESS);

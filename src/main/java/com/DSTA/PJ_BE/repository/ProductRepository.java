@@ -18,10 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         value = "SELECT p.id as id, p.name_product as name, p.slug_product as slug, p.information as information, " +
     "p.summary as summary, p.description as description, p.image as image, p.stock as stock, p.price as price, " +
     "p.discounted_price as discountedPrice, p.status as status, c.name_category AS categoriesName, " +
-    "b.name_brand AS brandsName " +
+    "co.name_collection AS collectionName " +
     "FROM product p " +
-    "LEFT JOIN categories c ON p.categories_id = c.id " +
-    "LEFT JOIN brand b ON p.brands_id = b.id " +
+    "LEFT JOIN category c ON p.categories_id = c.id " +
+    "LEFT JOIN collection co ON p.collection_id = co.id " +
     "ORDER BY p.id ASC ", nativeQuery = true
     )
     Page<ProductGetAllInfDto> getAllProductInf(Pageable pageable);
@@ -31,10 +31,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     @Query(value = "SELECT p.name_product as name, p.slug_product as slug, p.information as information, p.summary as summary,"+
             "       p.description as description, p.image as image, p.stock as stock, p.price as price, p.discounted_price as discountedPrice,"+
-            "       p.status as status, c.id as categoriesId, b.id as brandsId " +
+            "       p.status as status, c.id as categoriesId, co.id as collectionId " +
             "FROM product p " +
-            "JOIN categories c ON p.categories_id = c.id " +
-            "JOIN brand b ON p.brands_id = b.id " +
+            "JOIN category c ON p.categories_id = c.id " +
+            "JOIN collection co ON p.collection_id = co.id " +
             "WHERE p.id = :id", nativeQuery = true)
     ProductGetByIdInfDto getProductByIDInf(@Param("id") Long id);
 }

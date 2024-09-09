@@ -16,7 +16,7 @@ public class ProductGetByIdDto {
     private BigDecimal price;
     private BigDecimal discountedPrice;
     private Long categoriesId;
-    private Long brandsId;
+    private Long collectionId;
     private String status;
 
     public String getName() {
@@ -111,12 +111,11 @@ public class ProductGetByIdDto {
         this.categoriesId = categoriesId;
     }
     
-    public Long getBrandsId() {
-        return brandsId;
+    public Long getCollectionId() {
+        return collectionId;
     }
-
-    public void setBrandsId(Long brandsId) {
-        this.brandsId = brandsId;
+    public void setCollectionId(Long collectionId) {
+        this.collectionId = collectionId;
     }
 }
 

@@ -9,7 +9,7 @@ public class CollectionsAddDto {
     private String slug;
     private String imageCollection;
     private String description;
-    private Boolean isActive;
+    private String isActive;
     private Long categoryId;
     private Long productId;
 
@@ -49,14 +49,20 @@ public class CollectionsAddDto {
         this.description = description;
     }
 
-    public Boolean getActive() {
+    // public Boolean getIsActive() {
+    //     return isActive;
+    // }
+    
+    // public void setIsActive(Boolean isActive) {
+    //     this.isActive = isActive;
+    // }
+
+    public String getIsActive() {
         return isActive;
     }
-
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
-
     public Long getCategoryId() {
         return categoryId;
     }
@@ -69,7 +75,7 @@ public class CollectionsAddDto {
         return productId;
     }
 
-    public void setProductIds(Long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 }

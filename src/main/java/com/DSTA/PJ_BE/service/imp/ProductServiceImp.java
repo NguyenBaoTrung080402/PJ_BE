@@ -137,7 +137,7 @@ public class ProductServiceImp implements ProductService {
             product.setDiscountedPrice(productCreateDto.getDiscountedPrice());
             product.setStatus(productCreateDto.getStatus());
             product.setCategoriesId(productCreateDto.getCategoriesId());
-            product.setBrandsId(productCreateDto.getBrandsId());
+            product.setCollectionId(productCreateDto.getCollectionId());
             productRepository.save(product);
 
             for (Long sizeId : productCreateDto.getSizeId()) {
@@ -208,7 +208,7 @@ public class ProductServiceImp implements ProductService {
             product.setDiscountedPrice(productCreateDto.getDiscountedPrice());
             product.setStatus(productCreateDto.getStatus());
             product.setCategoriesId(productCreateDto.getCategoriesId());
-            product.setBrandsId(productCreateDto.getBrandsId());
+            product.setCollectionId(productCreateDto.getCollectionId());
             productRepository.save(product);
 
             List<ProductColor> productColor = productColorRepository.getProductColorByProductId(product.getId());

@@ -17,7 +17,7 @@ public class ProductGetAllDto {
     private BigDecimal price;
     private BigDecimal  discountedPrice;
     private String categoriesName;
-    private String brandsName;
+    private String collectionName;
     private String status;
 
     public Long getId() {
@@ -110,12 +110,11 @@ public class ProductGetAllDto {
         this.categoriesName = categoriesName;
     }
 
-    public String getBrandsName() {
-        return brandsName;
+    public String getCollectionName() {
+        return collectionName;
     }
-
-    public void setBrandsName(String brandsName) {
-        this.brandsName = brandsName;
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 
     public String getStatus() {
