@@ -23,7 +23,7 @@ public interface ProductGetByIdInfDto {
 
     public Long getCategoriesId();
 
-    public Long getBrandsId();
+    public Long getCollectionId();
 
     public String getStatus();
 }

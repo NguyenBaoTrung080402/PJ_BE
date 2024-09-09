@@ -17,7 +17,7 @@ public class ProductCreateDto {
     private BigDecimal price;
     private BigDecimal discountedPrice;
     private Long categoriesId;
-    private Long brandsId;
+    private Long collectionId;
     private String status;
     @JsonDeserialize(using = LongListDeserializer.class)
     private List<Long> colorId;
@@ -117,12 +117,11 @@ public class ProductCreateDto {
         this.categoriesId = categoriesId;
     }
 
-    public Long getBrandsId() {
-        return brandsId;
+    public Long getCollectionId() {
+        return collectionId;
     }
-
-    public void setBrandsId(Long brandsId) {
-        this.brandsId = brandsId;
+    public void setCollectionId(Long collectionId) {
+        this.collectionId = collectionId;
     }
 
     public String getStatus() {

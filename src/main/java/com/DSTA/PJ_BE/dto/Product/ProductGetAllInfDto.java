@@ -25,7 +25,7 @@ public interface ProductGetAllInfDto {
 
     public String getCategoriesName();
 
-    public String getBrandsName();
+    public String getCollectionName();
 
     public String getStatus();
 }

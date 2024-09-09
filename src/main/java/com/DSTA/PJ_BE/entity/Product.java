@@ -30,8 +30,8 @@ public class Product {
     private BigDecimal  discountedPrice;
     @Column(name = "categories_id", columnDefinition = "BIGINT", nullable = false)
     private Long categoriesId;
-    @Column(name = "brands_id", columnDefinition = "BIGINT", nullable = false)
-    private Long brandsId;
+    @Column(name = "collection_id", columnDefinition = "BIGINT", nullable = false)
+    private Long collectionId;
     @Column(name = "status", columnDefinition = "VARCHAR(20)", nullable = false)
     private String status;
     @Column(name = "reviews_count", columnDefinition = "BIGINT")
@@ -129,13 +129,12 @@ public class Product {
         this.categoriesId = categoriesId;
     }
 
-    public Long getBrandsId() {
-        return brandsId;
-    }
-
-    public void setBrandsId(Long brandsId) {
-        this.brandsId = brandsId;
-    }
+   public Long getCollectionId() {
+       return collectionId;
+   }
+   public void setCollectionId(Long collectionId) {
+       this.collectionId = collectionId;
+   }
 
     public String getStatus() {
         return status;
