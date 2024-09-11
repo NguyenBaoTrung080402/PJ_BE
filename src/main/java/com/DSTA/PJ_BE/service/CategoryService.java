@@ -11,4 +11,6 @@ public interface CategoryService {
     DataResponse updateCategory(Long id, Category brand);
 
     DataResponse deleteCategory(Long id);
+
+    DataResponse getDetailCategory(Long id);
 }
