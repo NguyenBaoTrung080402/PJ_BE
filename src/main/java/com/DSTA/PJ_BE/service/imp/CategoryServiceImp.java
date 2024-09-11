@@ -118,4 +118,25 @@ public class CategoryServiceImp implements CategoryService {
         }
     }
 
+    @Override
+    public DataResponse getDetailCategory(Long id) {
+        log.debug("Request Get Detail Category");
+        DataResponse res = new DataResponse();
+        try {
+            Category category = brandRepository.getBrandById(id);
+            if(category == null){
+                res.setStatus(Constants.NOT_FOUND);
+                res.setMessage(Constants.NOT_FOUND);
+                return res;
+            }
+            res.setStatus(Constants.SUCCESS);
+            res.setResult(category);
+            return res;
+        } catch (Exception ex){
+            res.setStatus(Constants.ERROR);
+            res.setMessage(Constants.SYSTEM_ERROR);
+            return res;
+        }
+    }
+
 }

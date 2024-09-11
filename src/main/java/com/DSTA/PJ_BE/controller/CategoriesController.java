@@ -15,26 +15,26 @@ public class CategoriesController {
     private final Logger log = LoggerFactory.getLogger(CategoriesController.class);
 
     @Autowired
-    private CategoryService brandsService;
+    private CategoryService categoryService;
 
     @PostMapping("/create-category")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public DataResponse createCategories (@RequestBody Category category){
         log.debug("Controller Request Create category");
-        DataResponse res = brandsService.createCategory(category);
+        DataResponse res = categoryService.createCategory(category);
         return res;
     }
     @GetMapping("/get-all-categories")
     public DataResponse getListCategory (){
         log.debug("Controller Request Get All Categories");
-        DataResponse res = brandsService.getAllCategories();
+        DataResponse res = categoryService.getAllCategories();
         return res;
     }
     @PutMapping("/update-category/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public DataResponse updateCategory(@PathVariable("id") Long id, @RequestBody Category brand){
         log.debug("Controller Request Update Brands");
-        DataResponse res = brandsService.updateCategory(id, brand);
+        DataResponse res = categoryService.updateCategory(id, brand);
         return res;
     }
 
@@ -42,7 +42,15 @@ public class CategoriesController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public DataResponse deleteCategory(@PathVariable("id") Long id){
         log.debug("Controller Delete Brands");
-        DataResponse res = brandsService.deleteCategory(id);
+        DataResponse res = categoryService.deleteCategory(id);
+        return res;
+    }
+
+    @GetMapping("/get-detail-category/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public DataResponse getDetailCategories(@PathVariable("id") Long id){
+        log.debug("Controller Request Get Detail Brands");
+        DataResponse res = categoryService.getDetailCategory(id);
         return res;
     }
 }
